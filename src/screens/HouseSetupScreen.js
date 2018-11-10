@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {Image, Text, Button, StyleSheet, View, TextInput} from "react-native";
+import {Image, Text, Button, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
 
@@ -9,7 +9,7 @@ const User = tForm.struct({
 });
 
 export default class HouseSetupScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes houseID to "".
     constructor(props) {
         super(props);
         this.state = {nameID: ""};
@@ -22,13 +22,12 @@ export default class HouseSetupScreen extends Component {
     };
 
     /**
-     * handleSubmit()
-     * When the "Sign Up" button is pressed, this function is called.
-     * It grabs the values in all input boxes and prints them to the console.
+     * handleSubmit_JoinHome()
+     * When the join button is pressed, this function is called.
+     * It grabs the values in the input box and prints them to the console.
      * Then proceeds to the next screen if no values were null.
-     * TODO: 'House Code' or 'House Name' can have a null field, but not both.
+     * TODO: add memeber to the household with the given houseID
      */
-
     handleSubmit_JoinHome = () => {
         const value = this._form.getValue();
         console.log('value: ', value);
@@ -37,6 +36,12 @@ export default class HouseSetupScreen extends Component {
         }
     };
 
+    /**
+     * handleSubmit_CreateHome()
+     * When the create button is pressed, this function is called.
+     * It simply proceeds to the next screen.
+     * TODO: add houseID generation here
+     */
     handleSubmit_CreateHome = () => {
             this.props.navigation.navigate("TabNavigation");
     };
@@ -48,7 +53,6 @@ export default class HouseSetupScreen extends Component {
     /**
      * render()
      * Layout for the sign up screen.
-     * TODO: The 'KeyboardAvoidingView' can potentially block the sign up button.
      * WARNING! Image path may need to be updated depending on directory hierarchy.
      * @returns {Layout}
      */
@@ -56,12 +60,12 @@ export default class HouseSetupScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.box_Spacer}>
-                    <Text style={styles.text_SubTitle}></Text>
+                    <Text></Text>
                 </View>
                 <View style={styles.box_Option}>
                     <View style={styles.box_Fitter} >
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_joinHouse_noBackground.png")}
+                               source={require("../assets/HouseMates_joinHouse_outlined_noBackground.png")}
                                resizeMode="contain"/>
                         <Text style={styles.text_SubTitle}>
                             If you have received a house code from someone, enter it below.
@@ -75,12 +79,12 @@ export default class HouseSetupScreen extends Component {
                     </View>
                 </View>
                 <View style={styles.box_Spacer}>
-                    <Text style={styles.text_SubTitle}></Text>
+                    <Text></Text>
                 </View>
                 <View style={styles.box_Option}>
                     <View style={styles.box_Fitter}>
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_newHouse_noBackground.png")}
+                               source={require("../assets/HouseMates_newHouse_outlined_noBackground.png")}
                                resizeMode="contain"/>
                         <Text style={[styles.text_SubTitle2]}>
                             Or start off on your own by creating a new home!
