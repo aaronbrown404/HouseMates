@@ -18,7 +18,7 @@ class LogoTitle extends React.Component {
     render() {
         return (
             <View style={{paddingLeft: 8}}>
-               <Image source={require('./assets/HouseMatesPNGLogo_long_noBackground.png')}
+               <Image source={require('./src/assets/HouseMatesPNGLogo_long_noBackground.png')}
                       style={{width: 180, height: 90}}
                       resizeMode='contain'
                />
