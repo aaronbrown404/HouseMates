@@ -149,7 +149,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#283350',
-        padding: 22
+        paddingLeft: 16,
+        paddingRight: 16,
+        // This field can be changed to adjust style.
+        paddingTop: 0,
     },
     box_SubContainer: {
         flex: 1,
