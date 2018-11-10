@@ -1,5 +1,6 @@
 import {Component} from "react";
-import {Text, Button, Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import { Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
 
@@ -24,11 +25,11 @@ export default class WelcomeScreen extends Component {
     };
 
     /**
-     * handleSubmit()
-     * When the "Sign Up" button is pressed, this function is called.
+     * handleSubmit_LogIn()
+     * When the "LOG IN" button is pressed, this function is called.
      * It grabs the values in all input boxes and prints them to the console.
      * Then proceeds to the next screen if no values were null.
-     * TODO: 'House Code' or 'House Name' can have a null field, but not both.
+     * TODO: Update database with given values.
      */
     handleSubmit_LogIn = () => {
         const value = this._form.getValue();
@@ -39,6 +40,11 @@ export default class WelcomeScreen extends Component {
         }
     };
 
+    /**
+     * handleSubmit_SignUp()
+     * When the "Sign Up" button is pressed, this function is called.
+     * It simply proceeds to the sign up screen.
+     */
     handleSubmit_SignUp = () => {
         this.props.navigation.navigate("SignUp")
     };
@@ -56,7 +62,6 @@ export default class WelcomeScreen extends Component {
     /**
      * render()
      * Layout for the sign up screen.
-     * TODO: The 'KeyboardAvoidingView' can potentially block the sign up button.
      * WARNING! Image path may need to be updated depending on directory hierarchy.
      * @returns {Layout}
      */
@@ -66,9 +71,8 @@ export default class WelcomeScreen extends Component {
                 <View style = {styles.container}>
                     <View style={[styles.box_Logo]}>
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMatesPNGLogo_noBackground.png")}
+                               source={require("../assets/HouseMatesPNGLogo_dirtySlogan_noBackground.png")}
                                resizeMode="contain"/>
-                        <Text style={[styles.text_Welcome]}>Doing the dirty work.</Text>
                     </View>
                     <View style={[styles.box_Form]}>
                         <Form ref={c => this._form = c}
@@ -76,12 +80,21 @@ export default class WelcomeScreen extends Component {
                               value={this.state.value}
                               onChange={this.onChange}
                               options={options}/>
-                        <Button title="Log In" onPress={this.handleSubmit_LogIn} color='#425281'/>
+                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center'}}
+                                 onPress={this.handleSubmit_LogIn}
+                                 containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 2,
+                                                    backgroundColor: '#415180' }}>
+                            LOG IN
+                        </Button>
                     </View>
-                    <Button title="No account? Sign up!"
-                            onPress={this.handleSubmit_SignUp}
-                            color='#425281'/>
-
+                    <View style={{paddingBottom: 0}}>
+                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                                 onPress={this.handleSubmit_SignUp}
+                                 containerStyle={{ padding: 14, height: 55, overflow: 'hidden', borderRadius: 0,
+                                                    backgroundColor: '#415180' }}>
+                            NO ACCOUNT? SIGN UP!
+                        </Button>
+                    </View>
                 </View>
             </KeyboardAvoidingView>
         );
