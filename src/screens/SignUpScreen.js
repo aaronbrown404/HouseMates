@@ -2,6 +2,7 @@ import {Component} from "react";
 import {Text, Button, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
+import Firebase from "../components/Firebase";
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -33,12 +34,17 @@ export default class SignUpScreen extends Component {
      * Then proceeds to the next screen if no values were null.
      * TODO: 'House Code' or 'House Name' can have a null field, but not both.
       */
-
     handleSubmit = () => {
         const value = this._form.getValue();
         console.log('value: ', value);
         if (value) {
-            this.props.navigation.navigate("HouseSetup");
+            Firebase.userInfo = {userEmail: value.e_mail, userName: value.name, userPass: value.password};
+            try {
+                Firebase.auth.createUserWithEmailAndPassword(value.e_mail, value.password);
+                this.props.navigation.navigate("HouseSetup");
+            } catch (e) {
+                alert(e);
+            }
         }
     };
 
@@ -56,7 +62,6 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-
                     <View style={[styles.box_SubContainer]}>
                         <View style={[styles.box_Title]}>
                             <Text style={styles.text_Title}>Sign Up</Text>
@@ -71,7 +76,6 @@ export default class SignUpScreen extends Component {
                             <Button title='Sign Up' color='#425281' onPress={this.handleSubmit}/>
                         </View>
                     </View>
-
             </KeyboardAvoidingView>
         );
     }
