@@ -2,6 +2,7 @@ import {Component} from "react";
 import {Text, Button, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
+import Firebase from "../components/Firebase";
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -14,10 +15,16 @@ const User = tForm.struct({
 });
 
 export default class SignUpScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+
+    state = {
+        name: "",
+        e_mail: "",
+        phoneNumber: "",
+        password:  "",
+        verify_password: "",
+    };
     constructor(props) {
         super(props);
-        this.state = { name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "" };
         this.onChange=this.onChange.bind(this);
     }
 
@@ -33,12 +40,16 @@ export default class SignUpScreen extends Component {
      * Then proceeds to the next screen if no values were null.
      * TODO: 'House Code' or 'House Name' can have a null field, but not both.
       */
-
     handleSubmit = () => {
         const value = this._form.getValue();
-        console.log('value: ', value);
         if (value) {
-            this.props.navigation.navigate("HouseSetup");
+            //store user info in Firebase object (might be useful later on)
+            Firebase.userInfo = {userEmail: value.e_mail, userName: value.name, userPass: value.password};
+            //create the user with given credentials -> alert with message if they already exist
+            Firebase.auth
+                .createUserWithEmailAndPassword(value.e_mail, value.password)
+                .then( () => { this.props.navigation.navigate("HouseSetup"); })
+                .catch((err) => { alert(err)});
         }
     };
 
@@ -56,7 +67,6 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-
                     <View style={[styles.box_SubContainer]}>
                         <View style={[styles.box_Title]}>
                             <Text style={styles.text_Title}>Sign Up</Text>
@@ -71,7 +81,6 @@ export default class SignUpScreen extends Component {
                             <Button title='Sign Up' color='#425281' onPress={this.handleSubmit}/>
                         </View>
                     </View>
-
             </KeyboardAvoidingView>
         );
     }
