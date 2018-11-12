@@ -1,8 +1,8 @@
 import {Component} from "react";
-import {Image, Text, Button, StyleSheet, View} from "react-native";
+import {Image, Text, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
-
+import Button from 'react-native-button';
 const Form = tForm.form.Form;
 const User = tForm.struct({
     houseID: tForm.String,
@@ -65,7 +65,7 @@ export default class HouseSetupScreen extends Component {
                 <View style={styles.box_Option}>
                     <View style={styles.box_Fitter} >
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_joinHouse_outlined_noBackground.png")}
+                               source={require("../assets/HouseMates_joinHouse_outlinedTEST_noBackground.png")}
                                resizeMode="contain"/>
                         <Text style={styles.text_SubTitle}>
                             If you have received a house code from someone, enter it below.
@@ -75,7 +75,12 @@ export default class HouseSetupScreen extends Component {
                               value={this.state.value}
                               onChange={this.onChange}
                               options={options}/>
-                        <Button title='Join Existing Home' color='#415180' onPress={this.handleSubmit_JoinHome}/>
+                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                                onPress={this.handleSubmit_JoinHome}
+                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                    backgroundColor: '#415180' }}>
+                            JOIN EXISTING HOME
+                        </Button>
                     </View>
                 </View>
                 <View style={styles.box_Spacer}>
@@ -84,12 +89,17 @@ export default class HouseSetupScreen extends Component {
                 <View style={styles.box_Option}>
                     <View style={styles.box_Fitter}>
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_newHouse_outlined_noBackground.png")}
+                               source={require("../assets/HouseMates_newHouse_outlinedTEST_noBackground.png")}
                                resizeMode="contain"/>
                         <Text style={[styles.text_SubTitle2]}>
                             Or start off on your own by creating a new home!
                         </Text>
-                        <Button title='Create New Home' color='#415180' onPress={this.handleSubmit_CreateHome}/>
+                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                                onPress={this.handleSubmit_CreateHome}
+                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                    backgroundColor: '#415180' }}>
+                            CREATE NEW HOME
+                        </Button>
                     </View>
                 </View>
 
