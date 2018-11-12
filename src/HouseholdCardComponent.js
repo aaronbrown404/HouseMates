@@ -38,7 +38,7 @@ export default class CardComponent extends Component {
                     </Left>
                     <Right>
                         <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
-                            <Icon name='ios-paper-plane' style={{color: 'white'}}/>
+                            <Icon name='ios-notifications' style={{color: 'white'}}/>
                         </Button>
                     </Right>
                 </CardItem>
