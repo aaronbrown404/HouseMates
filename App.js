@@ -7,8 +7,9 @@ import { Icon, Button } from 'native-base';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import HouseSetupScreen from './src/screens/HouseSetupScreen';
-import WIPScreen from './src/screens/WIPScreen';
+import CreateTaskScreen from './src/screens/CreateTaskScreen';
 import TabNavigation from "./src/TabNavigation";
+import WIPScreen from "./src/screens/WIPScreen";
 
 
 /**
@@ -42,6 +43,9 @@ const RootStack = createStackNavigator(
         TabNavigation: {
             screen: TabNavigation
         },
+        CreateTask: {
+            screen: CreateTaskScreen
+        },
         WIP: {
             screen: WIPScreen
         }
@@ -55,14 +59,15 @@ const RootStack = createStackNavigator(
             headerStyle: {
                 backgroundColor: '#283350',
             },
-
-            // Lacks functionality at the moment.
+            
+            // Lacks functionality at the moment. This is the options button (three dots) at the top right
+            // of the nav bar on the ToDoListScreen.js and HouseholdScreen.js.
             headerRight:
-                    <Button transparent
-                            style={{justifyContent: 'center', alignSelf: 'center'}}>
-                        <Icon style={{color: 'white'}}
-                              name="md-more"/>
-                    </Button>,
+                <Button transparent
+                        style={{justifyContent: 'center', alignSelf: 'center'}}>
+                    <Icon style={{color: 'white'}}
+                          name="md-more"/>
+                </Button>,
             headerTintColor: "white"
         }
     }
