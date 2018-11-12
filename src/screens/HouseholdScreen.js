@@ -10,7 +10,8 @@ import CardComponent from "../HouseholdCardComponent";
 /**
  * class HouseholdScreen
  * Task management screen. The main functionality of this screen allows the user to add/edit/remove tasks,
- * send anonymous notifications, and search through existing tasks.
+ * send anonymous notifications, and search through existing tasks. To change layout of cards, see
+ * HouseholdCardComponent.js
  */
 export default class HouseholdScreen extends React.Component {
 
@@ -26,6 +27,10 @@ export default class HouseholdScreen extends React.Component {
         tabBarIcon: ({tintColor})=>(
             <Icon name='ios-home' style={{color: tintColor}} />
         )
+    };
+
+    handleSubmit_CreateTask = () => {
+        this.props.navigation.navigate("CreateTask");
     };
 
     render() {
@@ -51,7 +56,9 @@ export default class HouseholdScreen extends React.Component {
                 </Content>
                 <View style={{padding: 10}}>
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4, backgroundColor: '#6171A0' }}>
+                            onPress={this.handleSubmit_CreateTask}
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                                backgroundColor: '#6171A0' }}>
                         ADD A TASK
                     </Button>
                 </View>
