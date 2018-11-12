@@ -1,7 +1,8 @@
 import {Component} from "react";
-import {Text, Button, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import {Text, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
+import Button from 'react-native-button';
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -31,10 +32,9 @@ export default class SignUpScreen extends Component {
      * When the "Sign Up" button is pressed, this function is called.
      * It grabs the values in all input boxes and prints them to the console.
      * Then proceeds to the next screen if no values were null.
-     * TODO: 'House Code' or 'House Name' can have a null field, but not both.
       */
 
-    handleSubmit = () => {
+    handleSubmit_SignUp = () => {
         const value = this._form.getValue();
         console.log('value: ', value);
         if (value) {
@@ -56,7 +56,6 @@ export default class SignUpScreen extends Component {
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-
                     <View style={[styles.box_SubContainer]}>
                         <View style={[styles.box_Title]}>
                             <Text style={styles.text_Title}>Sign Up</Text>
@@ -68,10 +67,14 @@ export default class SignUpScreen extends Component {
                                   value={this.state.value}
                                   onChange={this.onChange}
                                   options={options}/>
-                            <Button title='Sign Up' color='#425281' onPress={this.handleSubmit}/>
+                            <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                                    onPress={this.handleSubmit_SignUp}
+                                    containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                        backgroundColor: '#415180' }}>
+                                SIGN UP
+                            </Button>
                         </View>
                     </View>
-
             </KeyboardAvoidingView>
         );
     }
@@ -84,11 +87,13 @@ const formStyles = {
     controlLabel: {
         normal: {
             color: '#415180',
-            fontSize: 14
+            fontSize: 14,
+            fontWeight: 'bold'
         },
         error: {
             color: 'red',
-            fontSize: 14
+            fontSize: 14,
+            fontWeight: 'bold'
         }
     },
     textbox: {
