@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Container, Content, Icon} from 'native-base';
 
 // WARNING! Image path may need to be updated depending on directory hierarchy.
-import CardComponent from '../ToDoListCardComponent';
+import CardComponent from '../components/ToDoListCardComponent';
 
 /**
  * class ToDoListScreen
