@@ -4,7 +4,7 @@ import {Container, Content, Icon} from "native-base";
 import Button from 'react-native-button';
 
 // WARNING! Image path may need to be updated depending on directory hierarchy.
-import CardComponent from "../HouseholdCardComponent";
+import CardComponent from "../components/HouseholdCardComponent";
 
 /**
  * class HouseholdScreen
