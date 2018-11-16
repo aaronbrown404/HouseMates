@@ -3,6 +3,7 @@ import { Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
+import Firebase from "../components/Firebase";
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -36,7 +37,13 @@ export default class WelcomeScreen extends Component {
         console.log('value: ', value);
         // If password and email match database, log in.
         if (value) {
-            this.props.navigation.navigate("TabNavigation");
+            //store user info in Firebase object (might be useful later on)
+            Firebase.userInfo = {userEmail: value.e_mail, userPass: value.password};
+            //sign the user in with given credentials -> alert with message if they already exist
+            Firebase.auth
+                .signInWithEmailAndPassword(value.e_mail, value.password)
+                .then( () => { this.props.navigation.navigate("TabNavigation"); })
+                .catch((err) => { alert(err)});
         }
     };
 
