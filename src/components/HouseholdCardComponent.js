@@ -19,10 +19,10 @@ export default class CardComponent extends Component {
         // TODO: images will need to change to the database list of thumbnails for user (if this feature is desired).
         // WARNING! Image path may need to be updated depending on directory hierarchy.
         const images = {
-            "1": require('./assets/temp_thumbnail_1.png'),
-            "2": require('./assets/temp_thumbnail_2.png'),
-            "3": require('./assets/temp_thumbnail_3.png'),
-            "4": require('./assets/temp_thumbnail_4.png')
+            "1": require('../assets/temp_thumbnail_1.png'),
+            "2": require('../assets/temp_thumbnail_2.png'),
+            "3": require('../assets/temp_thumbnail_3.png'),
+            "4": require('../assets/temp_thumbnail_4.png')
         };
 
         return (
