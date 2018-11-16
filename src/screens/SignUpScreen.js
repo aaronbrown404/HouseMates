@@ -1,7 +1,8 @@
 import {Component} from "react";
-import {Text, Button, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import {Text, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
+import Button from 'react-native-button';
 import Firebase from "../components/Firebase";
 
 // Form and User initialize the user input fields.
@@ -15,16 +16,10 @@ const User = tForm.struct({
 });
 
 export default class SignUpScreen extends Component {
-
-    state = {
-        name: "",
-        e_mail: "",
-        phoneNumber: "",
-        password:  "",
-        verify_password: "",
-    };
+    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
     constructor(props) {
         super(props);
+        this.state = { name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "" };
         this.onChange=this.onChange.bind(this);
     }
 
@@ -40,7 +35,8 @@ export default class SignUpScreen extends Component {
      * Then proceeds to the next screen if no values were null.
      * TODO: 'House Code' or 'House Name' can have a null field, but not both.
       */
-    handleSubmit = () => {
+
+    handleSubmit_SignUp = () => {
         const value = this._form.getValue();
         if (value) {
             //store user info in Firebase object (might be useful later on)
@@ -78,7 +74,12 @@ export default class SignUpScreen extends Component {
                                   value={this.state.value}
                                   onChange={this.onChange}
                                   options={options}/>
-                            <Button title='Sign Up' color='#425281' onPress={this.handleSubmit}/>
+                            <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                                    onPress={this.handleSubmit_SignUp}
+                                    containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                        backgroundColor: '#415180' }}>
+                                SIGN UP
+                            </Button>
                         </View>
                     </View>
             </KeyboardAvoidingView>
@@ -93,11 +94,13 @@ const formStyles = {
     controlLabel: {
         normal: {
             color: '#415180',
-            fontSize: 14
+            fontSize: 14,
+            fontWeight: 'bold'
         },
         error: {
             color: 'red',
-            fontSize: 14
+            fontSize: 14,
+            fontWeight: 'bold'
         }
     },
     textbox: {
@@ -158,7 +161,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#283350',
-        padding: 22
+        paddingLeft: 16,
+        paddingRight: 16,
+        // This field can be changed to adjust style.
+        paddingTop: 0,
     },
     box_SubContainer: {
         flex: 1,
