@@ -1,26 +1,36 @@
 import React from 'react';
-import { createBottomTabNavigator, StackNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation';
+
+// WARNING! Image path may need to be updated depending on directory hierarchy.
 import ToDoListScreen from './screens/ToDoListScreen';
 import HouseholdScreen from './screens/HouseholdScreen';
 
-
-export default createBottomTabNavigator(
+/**
+ * createMaterialTopTabNavigator
+ * Enables the bottom tabs and allows navigation between screens linked to it.
+ */
+export default createMaterialTopTabNavigator(
     {
     ToDoList: ToDoListScreen,
     Household: HouseholdScreen,
     },
     {
+        animationEnabled: true,
+        swipeEnabled: true,
+        tabBarPosition: 'bottom',
+
         tabBarOptions: {
             initialRouteName: 'ToDoList',
-
-            animationEnabled: 'true',
+            showIcon: true,
+            showLabel: true,
             activeTintColor: '#ffd344',
-            inactiveTintColor: 'white',
-            activeBackgroundColor: '#283350',
-            inactiveBackgroundColor: '#283350'
+            inactiveTintColor: '#A1B1E0',
+            labelStyle: {
+                fontSize: 8,
+            },
+            style: {
+                backgroundColor: '#283350',
+            },
         },
-        style: {
-            backgroundColor: 'blue'
-        }
     }
 );
