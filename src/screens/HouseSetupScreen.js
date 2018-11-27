@@ -1,13 +1,17 @@
+// Added image.
 import {Component} from "react";
 import {Image, Text, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
+import firebase from 'firebase';
+
+import { joinCreateHouse } from '../components/DatabaseAPI';
+
 const Form = tForm.form.Form;
 const User = tForm.struct({
     houseID: tForm.String,
 });
-
 export default class HouseSetupScreen extends Component {
     // Constructor initializes houseID to "".
     constructor(props) {
@@ -22,28 +26,31 @@ export default class HouseSetupScreen extends Component {
     };
 
     /**
-     * handleSubmit_JoinHome()
-     * When the join button is pressed, this function is called.
-     * It grabs the values in the input box and prints them to the console.
-     * Then proceeds to the next screen if no values were null.
-     * TODO: add memeber to the household with the given houseID
-     */
-    handleSubmit_JoinHome = () => {
-        const value = this._form.getValue();
-        console.log('value: ', value);
-        if (value) {
-            this.props.navigation.navigate("TabNavigation");
-        }
-    };
-
-    /**
      * handleSubmit_CreateHome()
      * When the create button is pressed, this function is called.
      * It simply proceeds to the next screen.
      * TODO: add houseID generation here
      */
-    handleSubmit_CreateHome = () => {
-            this.props.navigation.navigate("TabNavigation");
+    handleSubmit_CreateJoinHome = () => {
+            const house_name = this._form.getValue().houseID   
+            const { currentUser } = firebase.auth();
+
+            // Set user's housename
+            firebase.database().ref(`/users/${currentUser.uid}/house_id`).set( house_name );
+
+            // (!) Cannot use Database API, because we must navigate AFTER hosue has been created
+
+            // Sets the user's house_name' field
+            firebase.database().ref(`/users/${currentUser.uid}/house_id`)
+                .set( house_name )
+                .then(() => {
+                    firebase.database().ref(`/users/${currentUser.uid}/has_house`).set(true);            
+
+                    // Add the userID the the household's field 'users' (user's list)
+                    firebase.database().ref(`/houses/${house_name}/users`)
+                    .push(currentUser.uid)
+                        .then(() => {this.props.navigation.navigate("TabNavigation");});
+                });
     };
 
     onChange(value) {
@@ -60,18 +67,24 @@ export default class HouseSetupScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.box_Option1}>
+                    <Image style={{flex: 1, height:undefined, width:undefined}}
+                           source={require("../assets/HouseMates_newHouse_outlinedTEST_noBackground.png")}
+                           resizeMode="contain"/>
+
                     <Form ref={c => this._form = c}
                           type={User}
                           value={this.state.value}
                           onChange={this.onChange}
                           options={options}/>
+
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.handleSubmit_JoinHome}
+                            onPress={this.handleSubmit_CreateJoinHome}
                             containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
                                 backgroundColor: '#6171A0' }}>
                         JOIN EXISTING HOUSEHOLD
                     </Button>
                 </View>
+
                 <View style={styles.box_Option2}>
                     <View style={styles.box_Text}>
                         <Text style={[styles.text_SubTitle2]}>
@@ -79,7 +92,7 @@ export default class HouseSetupScreen extends Component {
                         </Text>
                     </View>
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.handleSubmit_CreateHome}
+                            onPress={this.handleSubmit_CreateJoinHome}
                             containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
                                 backgroundColor: '#6171A0' }}>
                         CREATE NEW HOUSEHOLD
@@ -121,7 +134,6 @@ const formStyles = {
         }
     },
 };
-
 // The following edits the fields of the form. This format is required for the API.
 const options = {
     fields: {
@@ -132,7 +144,6 @@ const options = {
     },
     stylesheet: formStyles,
 };
-
 // StyleSheet for the sign up screen.
 const styles = StyleSheet.create({
     container: {
@@ -155,7 +166,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#415180',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-
         padding: 10
     },
     box_Text: {
@@ -179,50 +189,3 @@ const styles = StyleSheet.create({
         marginBottom: 22
     },
 });
-
-/*
-<View style={styles.box_Spacer}>
-                    <Text></Text>
-                </View>
-                <View style={styles.box_Option}>
-                    <View style={styles.box_Fitter} >
-                        <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_joinHouse_outlinedTEST_noBackground.png")}
-                               resizeMode="contain"/>
-                        <Text style={styles.text_SubTitle}>
-                            If you have received a house code from someone, enter it below.
-                        </Text>
-                        <Form ref={c => this._form = c}
-                              type={User}
-                              value={this.state.value}
-                              onChange={this.onChange}
-                              options={options}/>
-                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                                onPress={this.handleSubmit_JoinHome}
-                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                    backgroundColor: '#415180' }}>
-                            JOIN EXISTING HOME
-                        </Button>
-                    </View>
-                </View>
-                <View style={styles.box_Spacer}>
-                    <Text></Text>
-                </View>
-                <View style={styles.box_Option}>
-                    <View style={styles.box_Fitter}>
-                        <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMates_newHouse_outlinedTEST_noBackground.png")}
-                               resizeMode="contain"/>
-                        <Text style={[styles.text_SubTitle2]}>
-                            Or start off on your own by creating a new home!
-                        </Text>
-                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                                onPress={this.handleSubmit_CreateHome}
-                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                    backgroundColor: '#415180' }}>
-                            CREATE NEW HOME
-                        </Button>
-                    </View>
-                </View>
-
- */

@@ -1,7 +1,8 @@
+// Added delete button and alert prompt.
+
 import React, { Component } from "react";
 import {Text, View, StyleSheet} from "react-native";
-import { Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base';
-
+import {Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base';
 
 /**
  * class CardComponent
@@ -27,7 +28,7 @@ export default class CardComponent extends Component {
 
         return (
             <Card>
-                <CardItem bordered>
+                <CardItem bordered button onPress={()=>alert("Edit Task!")}>
                     <Left>
                         <Thumbnail source={images[this.props.imageSource]}/>
                         <View style={{paddingLeft: 10}}>
@@ -37,9 +38,14 @@ export default class CardComponent extends Component {
                         </View>
                     </Left>
                     <Right>
-                        <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
-                            <Icon name='ios-notifications' style={{color: 'white'}}/>
-                        </Button>
+                        <View style={{flexDirection: 'row'}}>
+                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Task Deleted!")}>
+                                <Icon name='ios-trash' style={{color: 'white'}}/>
+                            </Button>
+                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
+                                <Icon name='ios-notifications' style={{color: 'white'}}/>
+                            </Button>
+                        </View>
                     </Right>
                 </CardItem>
             </Card>

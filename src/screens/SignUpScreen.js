@@ -4,6 +4,9 @@ import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
 import Firebase from "../components/Firebase";
+import { setLastName, setFirstName, setHasHouse } from '../components/DatabaseAPI';
+import firebase from 'firebase';
+
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -38,13 +41,24 @@ export default class SignUpScreen extends Component {
 
     handleSubmit_SignUp = () => {
         const value = this._form.getValue();
+        const { currentUser } = firebase.auth();
+
         if (value) {
             //store user info in Firebase object (might be useful later on)
             Firebase.userInfo = {userEmail: value.e_mail, userName: value.name, userPass: value.password};
             //create the user with given credentials -> alert with message if they already exist
             Firebase.auth
                 .createUserWithEmailAndPassword(value.e_mail, value.password)
-                .then( () => { this.props.navigation.navigate("HouseSetup"); })
+                .then( () => { 
+                    // Set First name
+                    setFirstName(value.name);
+                    // Set last name
+                    setLastName(value.name);
+                    // Set has-hosue to false
+                    setHasHouse(false);
+
+                    this.props.navigation.navigate("HouseSetup"); 
+                })
                 .catch((err) => { alert(err)});
         }
     };
