@@ -1,3 +1,11 @@
+global.Symbol = require('core-js/es6/symbol');
+require('core-js/fn/symbol/iterator');
+
+// collection fn polyfills
+require('core-js/fn/map');
+require('core-js/fn/set');
+require('core-js/fn/array/find');
+
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Image, View } from 'react-native';
@@ -83,6 +91,7 @@ const RootStack = createStackNavigator(
 export default class App extends React.Component {
 
     componentWillMount() {
+        console.log('hello');
         Firebase.init();
     }
 

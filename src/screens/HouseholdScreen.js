@@ -1,6 +1,7 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {Container, Content, Icon} from "native-base";
+import { getHouseTasks, getHouseUsers } from '../components/DatabaseAPI';
 import Button from 'react-native-button';
 
 // WARNING! Image path may need to be updated depending on directory hierarchy.
@@ -13,12 +14,31 @@ import CardComponent from "../components/HouseholdCardComponent";
  * HouseholdCardComponent.js
  */
 export default class HouseholdScreen extends React.Component {
-
     constructor (props) {
         super(props);
         this.state = {
-            firstQuery: ''
+            firstQuery: '',
+            tasks: [],
+            refreshing: false
         }
+    }
+
+    /* Updates the state tasks to be the lsit of tasks */
+    updateHouseTasks() {
+        this.setState({refreshing: true})
+        getHouseTasks().then( function(results) {
+            this.setState({tasks : results});
+            this.setState({refreshing : false})
+        }.bind(this));
+    }
+
+    /* Prior to rendering set up initial page */
+    componentWillMount() {
+        this.updateHouseTasks();
+
+        getHouseUsers()
+            .then( function(results) { this.setState({users : results}); }.bind(this))
+            .catch(e => alert(e));
     }
 
     static navigationOptions = {
@@ -35,19 +55,22 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <Content padder>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                    <CardComponent imageSource="1"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                    <CardComponent imageSource="1"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                </Content>
+                <FlatList
+                    data={this.state.tasks}
+                    renderItem={ ({item}) =>
+                        <CardComponent
+                            name={item.name}
+                            desc={item.desc}
+                            cycle={item.cycle}
+                            reminder={item.reminder}
+                            deadline={item.deadline}
+                            imageSource={1}
+                        />
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.componentWillMount.bind(this)}
+                />
                 <View style={{padding: 10}}>
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                             onPress={this.handleSubmit_CreateTask}
