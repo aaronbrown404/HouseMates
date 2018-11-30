@@ -1,8 +1,7 @@
 import React from "react";
 import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {Container, Content, Icon} from "native-base";
-import firebase from 'firebase';
-import _ from 'lodash';
+import { getHouseTasks, getHouseUsers } from '../components/DatabaseAPI';
 import Button from 'react-native-button';
 
 // WARNING! Image path may need to be updated depending on directory hierarchy.
@@ -24,29 +23,22 @@ export default class HouseholdScreen extends React.Component {
         }
     }
 
+    /* Updates the state tasks to be the lsit of tasks */
+    updateHouseTasks() {
+        this.setState({refreshing: true})
+        getHouseTasks().then( function(results) {
+            this.setState({tasks : results});
+            this.setState({refreshing : false})
+        }.bind(this));
+    }
+
+    /* Prior to rendering set up initial page */
     componentWillMount() {
-        let task_list = [];
+        this.updateHouseTasks();
 
-        const { currentUser } = firebase.auth();
-
-        // Set tasks
-        firebase.database().ref(`/users/${currentUser.uid}/house_id`)
-            .on( 'value', (snapshot) => {
-                const house_id = snapshot.val();
-                console.log(house_id);
-                firebase.database().ref(`/houses/${house_id}/tasks`)
-                    .on('value', (snapshot) => {
-                        const taskID_list = _.values(snapshot.val());
-
-                        for (let taskID of taskID_list) {
-                            firebase.database().ref(`/tasks/${taskID}`)
-                                .on('value', (snapshot) => {
-                                    task_list.push(snapshot.val());
-                                });
-                        }
-                        this.setState({tasks : task_list});
-                    });
-            });
+        getHouseUsers()
+            .then( function(results) { this.setState({users : results}); }.bind(this))
+            .catch(e => alert(e));
     }
 
     static navigationOptions = {

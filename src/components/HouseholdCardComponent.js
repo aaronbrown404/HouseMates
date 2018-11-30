@@ -60,7 +60,7 @@ export default class CardComponent extends Component {
                             <Text style={{fontWeight: 'bold'}}>
                                 {this.state.name}
                             </Text>
-                            <Text style={{}}>{this.state.desc}</Text>
+                            <Text>{this.state.desc}</Text>
                             <Text>{this.state.deadline}</Text>
                         </View>
                     </Left>

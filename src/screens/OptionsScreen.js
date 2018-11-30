@@ -13,7 +13,7 @@ const User = tForm.struct({
     verify_password: tForm.maybe(tForm.String)
 });
 export default class OptionsScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
         this.state = {name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "", modalVisible: false};
