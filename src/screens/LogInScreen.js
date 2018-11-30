@@ -4,6 +4,7 @@ import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Firebase from "../components/Firebase";
+import firebase from 'firebase';
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -34,15 +35,29 @@ export default class WelcomeScreen extends Component {
      */
     handleSubmit_LogIn = () => {
         const value = this._form.getValue();
-        console.log('value: ', value);
+        const { currentUser } = firebase.auth();
+
         // If password and email match database, log in.
         if (value) {
             //store user info in Firebase object (might be useful later on)
             Firebase.userInfo = {userEmail: value.e_mail, userPass: value.password};
             //sign the user in with given credentials -> alert with message if they already exist
-            Firebase.auth
+            firebase.auth()
                 .signInWithEmailAndPassword(value.e_mail, value.password)
-                .then( () => { this.props.navigation.navigate("TabNavigation"); })
+                .then( () => { 
+                    const { currentUser } = firebase.auth();
+
+                    firebase.database().ref(`/users/${currentUser.uid}/has_house`)
+                        .on('value', (snapshot) => {
+                            const has_house = snapshot.val();
+                            if (has_house) {
+                                this.props.navigation.navigate("TabNavigation");
+                            } else{
+                                this.props.navigation.navigate("HouseSetup");
+                            }
+                        });
+
+                })
                 .catch((err) => { alert(err)});
         }
     };
@@ -159,7 +174,8 @@ const options = {
             label: 'Email:'
         },
         password: {
-            label: 'Password:'
+            label: 'Password:',
+            secureTextEntry: true
         },
     },
     stylesheet: formStyles,

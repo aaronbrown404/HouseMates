@@ -1,7 +1,9 @@
+// Added delete button and alert prompt.
+
 import React, { Component } from "react";
 import {Text, View, StyleSheet} from "react-native";
-import { Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base';
-
+import {Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base';
+import firebase from 'firebase';
 
 /**
  * class CardComponent
@@ -12,7 +14,26 @@ import { Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base
 export default class CardComponent extends Component {
     constructor (props) {
         super(props);
-        this.state = {}
+
+        this.state = {
+            user: '',
+            name: this.props.name,
+            desc: this.props.desc,
+            cycle: this.props.cycle,
+            reminder: this.props.reminder,
+            deadline: this.props.deadline,
+            imageSource: this.props.imageSource
+        };
+    }
+
+    componentWillMount() {
+        const { currentUser } = firebase.auth();
+
+        firebase.database().ref(`/users/${currentUser.uid}/first_name`)
+            .on( 'value', (snapshot) => {
+                const firstName = snapshot.val();
+                this.setState({user: firstName})
+            });
     }
 
     render() {
@@ -27,19 +48,31 @@ export default class CardComponent extends Component {
 
         return (
             <Card>
-                <CardItem bordered>
+                <CardItem bordered button onPress={()=>alert("Edit Task!")}>
                     <Left>
-                        <Thumbnail source={images[this.props.imageSource]}/>
-                        <View style={{paddingLeft: 10}}>
-                            <Text style={{fontWeight: 'bold'}}>TASK TITLE</Text>
-                            <Text>Task Owner</Text>
-                            <Text>11:59am, December 31</Text>
+                        <View style={{flexDirection: 'column', justifyContent: 'flex-start'}}>
+                            <Thumbnail source={images[this.state.imageSource]}/>
+                            <Text style={{alignSelf: 'center'}}>
+                                {this.state.user}
+                            </Text>
+                        </View>
+                        <View style={{paddingLeft: 5}}>
+                            <Text style={{fontWeight: 'bold'}}>
+                                {this.state.name}
+                            </Text>
+                            <Text style={{}}>{this.state.desc}</Text>
+                            <Text>{this.state.deadline}</Text>
                         </View>
                     </Left>
                     <Right>
-                        <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
-                            <Icon name='ios-notifications' style={{color: 'white'}}/>
-                        </Button>
+                        <View style={{flexDirection: 'row'}}>
+                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Task Deleted!")}>
+                                <Icon name='ios-trash' style={{color: 'white'}}/>
+                            </Button>
+                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
+                                <Icon name='ios-notifications' style={{color: 'white'}}/>
+                            </Button>
+                        </View>
                     </Right>
                 </CardItem>
             </Card>

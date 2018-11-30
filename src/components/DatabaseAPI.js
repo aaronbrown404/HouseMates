@@ -22,6 +22,12 @@ export const setLastName = (last_name) => {
 		.set( last_name );
 }
 
+/* Sets the user's last name under 'last_name' field. */
+export const setHasHouse = (has_house) => {
+	const { currentUser } = firebase.auth();
+	firebase.database().ref(`/users/${currentUser.uid}/has_house`)
+		.set( has_house );
+}
 /** 
  * Given a house_name (which is equivalent to a house ID) the user 
  * will join that house. If the hosue does not exist the house will
@@ -64,11 +70,12 @@ export const setUserTask = (userId, taskId) => {
  *
  * Args: Task Object - Represents the task to be created
  */
-export const createTask = ({name, desc, day, deadline}) => {
+
+export const createTask = ({name, desc, cycle, reminder, deadline}) => {
 	const { currentUser } = firebase.auth();
 
 	// Create the task under the field and save the ID
-	const newTaskRef = firebase.database().ref(`/tasks`).push( {name, desc, day, deadline} );
+	const newTaskRef = firebase.database().ref(`/tasks`).push( {name, desc, cycle, reminder, deadline} );
 
 	// Take task id, put it house's tasks.	
 	firebase.database().ref(`/users/${currentUser.uid}/house_id`)
