@@ -6,7 +6,10 @@ import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
 import firebase from 'firebase';
 
-import { joinCreateHouse } from '../components/DatabaseAPI';
+import { 
+    joinCreateHouse,
+    setHouseName
+} from '../components/DatabaseAPI';
 
 const Form = tForm.form.Form;
 const User = tForm.struct({
@@ -34,23 +37,26 @@ export default class HouseSetupScreen extends Component {
     handleSubmit_CreateJoinHome = () => {
             const house_name = this._form.getValue().houseID   
             const { currentUser } = firebase.auth();
+            joinCreateHouse(house_name).then(() => {
+                this.props.navigation.navigate("TabNavigation");
+            });
+            // // Set user's housename
+            // firebase.database().ref(`/users/${currentUser.uid}/house_id`).set( house_name );
 
-            // Set user's housename
-            firebase.database().ref(`/users/${currentUser.uid}/house_id`).set( house_name );
+            // // (!) Cannot use Database API, because we must navigate AFTER hosue has been created
 
-            // (!) Cannot use Database API, because we must navigate AFTER hosue has been created
+            // // Sets the user's house_name' field
+            // firebase.database().ref(`/users/${currentUser.uid}/house_id`)
+            //     .set( house_name )
+            //     .then(() => {
+            //         // Set hashosue to true
+            //         firebase.database().ref(`/users/${currentUser.uid}/has_house`).set(true);            
 
-            // Sets the user's house_name' field
-            firebase.database().ref(`/users/${currentUser.uid}/house_id`)
-                .set( house_name )
-                .then(() => {
-                    firebase.database().ref(`/users/${currentUser.uid}/has_house`).set(true);            
-
-                    // Add the userID the the household's field 'users' (user's list)
-                    firebase.database().ref(`/houses/${house_name}/users`)
-                    .push(currentUser.uid)
-                        .then(() => {this.props.navigation.navigate("TabNavigation");});
-                });
+            //         // Add the userID the the household's field 'users' (user's list)
+            //         firebase.database().ref(`/houses/${house_name}/users`)
+            //         .push(currentUser.uid)
+            //             .then(() => {this.props.navigation.navigate("TabNavigation");});
+            //     });
     };
 
     onChange(value) {

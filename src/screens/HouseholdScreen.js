@@ -4,7 +4,13 @@ import {Container, Content, Icon} from "native-base";
 import firebase from 'firebase';
 import _ from 'lodash';
 import Button from 'react-native-button';
-
+import {
+    getHouseTasks,
+    assignTask,
+    getUserTasks,
+    reassignAllTasks,
+    getHouseUsers // TEMP
+} from '../components/DatabaseAPI';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from "../components/HouseholdCardComponent";
 
@@ -16,47 +22,48 @@ import CardComponent from "../components/HouseholdCardComponent";
  */
 
 export default class HouseholdScreen extends React.Component {
-    task_list = [{name: 'default'}];
-
-    constructor (props) {
-        super(props);
-        this.state = {
-            firstQuery: '',
-            tasks: []
-        }
-    }
-
-    componentWillMount() {
-        const { currentUser } = firebase.auth();
-
-        // Set tasks
-        firebase.database().ref(`/users/${currentUser.uid}/house_id`)
-            .on( 'value', (snapshot) => {
-                const house_id = snapshot.val();
-                console.log(house_id);
-                firebase.database().ref(`/houses/${house_id}/tasks`)
-                    .on('value', (snapshot) => {
-                        const taskID_list = _.values(snapshot.val());
-                        console.log(taskID_list);
-                        console.log(taskID_list)
-                        for (taskID of taskID_list) {
-                            console.log(taskID);
-                            firebase.database().ref(`/tasks/${taskID}`)
-                                .on('value', (snapshot) => {
-                                    this.task_list.push(snapshot.val());
-                                    console.log(this.task_list);
-                                });
-                        }
-                    });
-        });
-    }
-
     static navigationOptions = {
         title: "My Household",
         tabBarIcon: ({tintColor})=>(
             <Icon name='ios-home' style={{color: tintColor}} />
         )
     };
+
+    /* Ctor: Sets up init state for page */
+    constructor (props) {
+        super(props);
+        this.state = {
+            firstQuery: '',
+            tasks: [],
+            refreshing: false,
+            users: [{}]
+        }
+    }
+
+    /* Updates the state tasks to be the lsit of tasks */
+    updateHouseTasks() {
+        this.setState({refreshing: true})
+        getHouseTasks().then( function(results) {
+            console.log(results);
+            this.setState({tasks : results});
+            this.setState({refreshing : false})
+        }.bind(this));
+    }
+
+    reassignAllTasks() {
+        reassignAllTasks();
+    }
+
+    /* Prior to rendering set up initial page */
+    componentWillMount() {
+        this.updateHouseTasks();
+
+        getHouseUsers().then( function(results) {
+            this.setState({users : results});
+        }.bind(this));
+    }
+
+
 
     handleSubmit_CreateTask = () => {
         this.props.navigation.navigate("CreateTask");
@@ -65,23 +72,31 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <FlatList   
-                    data={this.task_list}
-                    renderItem={ ({item}) => <Text>{item.name}</Text> }
+                <View style={{padding: 10}}>
+                    <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                            onPress={this.reassignAllTasks}
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                                backgroundColor: 'red' }}>
+                        Reassign All Tasks
+                    </Button>
+                </View>
+                <FlatList
+                    data={this.state.tasks}
+                    renderItem={ ({item}) =>
+                        <CardComponent
+                            name={item.name}
+                            desc={item.desc}
+                            cycle={item.cycle}
+                            reminder={item.reminder}
+                            deadline={item.deadline}
+                            task_id = {item.task_id}
+                            imageSource={1}
+                        />
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.updateHouseTasks.bind(this)}
                 />
-                <Content padder>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                    <CardComponent imageSource="1"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                    <CardComponent imageSource="1"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="4"/>
-                    <CardComponent imageSource="2"/>
-                    <CardComponent imageSource="3"/>
-                </Content>
                 <View style={{padding: 10}}>
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                             onPress={this.handleSubmit_CreateTask}
@@ -98,6 +113,6 @@ export default class HouseholdScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: '#415180'
+        backgroundColor: '#F5F5F5'
     }
 });

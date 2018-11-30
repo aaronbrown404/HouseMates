@@ -139,12 +139,13 @@ const formStyles = {
     },
     textbox: {
         normal: {
-            color: 'white',
+            color: 'black',
             borderWidth: 1,
-            borderColor:'#415180',
+            borderColor:'#E5E5E5',
+            backgroundColor: '#F5F5F5',
             borderRadius: 4,
             height: 36,
-            marginBottom: 5
+            marginBottom: 8
         },
         error: {
             color: 'white',
@@ -163,7 +164,7 @@ const formStyles = {
         borderWidth: 1,
         borderRadius: 8,
         alignSelf: 'stretch',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 };
 
