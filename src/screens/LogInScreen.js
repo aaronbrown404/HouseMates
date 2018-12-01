@@ -1,5 +1,5 @@
 import {Component} from "react";
-import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';

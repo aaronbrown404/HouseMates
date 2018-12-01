@@ -16,7 +16,6 @@ import HouseSetupScreen from './src/screens/HouseSetupScreen';
 import CreateTaskScreen from './src/screens/CreateTaskScreen';
 import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
-import WIPScreen from './src/screens/WIPScreen';
 import Firebase from  './src/components/Firebase';
 
 /**
@@ -55,9 +54,6 @@ const RootStack = createStackNavigator(
         },
         CreateTask: {
             screen: CreateTaskScreen
-        },
-        WIP: {
-            screen: WIPScreen
         }
     },
     {
