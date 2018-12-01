@@ -27,7 +27,8 @@ export default class CardComponent extends Component {
             cycle: this.props.cycle,
             reminder: this.props.reminder,
             deadline: this.props.deadline,
-            imageSource: this.props.imageSource
+            imageSource: this.props.imageSource,
+            task_id: this.props.task_id
         };
     }
 
@@ -67,7 +68,7 @@ export default class CardComponent extends Component {
                     </Left>
                     <Right>
                         <View style={{flexDirection: 'column'}}>
-                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>alert("Task Deleted!")}>
+                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>{deleteTask(this.state.task_id); alert("Task Deleted!");}}>
                                 <Icon name='ios-trash' style={{color: 'white'}}/>
                             </Button>
                             <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
