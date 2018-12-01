@@ -14,7 +14,12 @@ export default class CardComponent extends Component {
         super(props);
         this.state = {
             textValue: 'COMPLETE TASK',
-            clicked: false
+            clicked: false,
+            name: this.props.name,
+            desc: this.props.desc,
+            cycle: this.props.cycle,
+            reminder: this.props.reminder,
+            deadline: this.props.deadline
         }
     }
 
@@ -59,11 +64,10 @@ export default class CardComponent extends Component {
             <Card>
                 <CardItem button bordered onPress={()=>alert("Detailed task description.")}>
                     <Left>
-                        <Thumbnail source={images[this.props.imageSource]}/>
                         <View style={{paddingLeft: 10}}>
-                            <Text style={{fontWeight: 'bold'}}>TASK TITLE</Text>
-                            <Text>Short task description.</Text>
-                            <Text>11:59am, December 31</Text>
+                            <Text style={{fontWeight: 'bold'}}>{this.state.name}</Text>
+                            <Text>{this.state.desc}</Text>
+                            <Text>{this.state.deadline}</Text>
                         </View>
                     </Left>
                 </CardItem>

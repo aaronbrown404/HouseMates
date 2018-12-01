@@ -1,3 +1,9 @@
+global.Symbol = require('core-js/es6/symbol');
+require('core-js/fn/symbol/iterator');
+require('core-js/fn/map');
+require('core-js/fn/set');
+require('core-js/fn/array/find');
+
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Image, View } from 'react-native';
@@ -15,7 +21,7 @@ import Firebase from  './src/components/Firebase';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 
 /**
- * Class required for top navigation bar's House Mates Logo image.
+ * Class required for top navigation bar's HouseMates Logo image.
  */
 class LogoTitle extends React.Component {
     render() {
@@ -87,6 +93,7 @@ const RootStack = createStackNavigator(
 export default class App extends React.Component {
 
     componentWillMount() {
+        console.log('hello');
         Firebase.init();
     }
 

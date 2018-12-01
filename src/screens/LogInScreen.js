@@ -1,9 +1,10 @@
 import {Component} from "react";
-import { Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Firebase from "../components/Firebase";
+import firebase from 'firebase';
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
@@ -13,7 +14,7 @@ const User = tForm.struct({
 });
 
 export default class WelcomeScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
         this.state = { e_mail: "", password: "" };
@@ -34,15 +35,29 @@ export default class WelcomeScreen extends Component {
      */
     handleSubmit_LogIn = () => {
         const value = this._form.getValue();
-        console.log('value: ', value);
+        const { currentUser } = firebase.auth();
+
         // If password and email match database, log in.
         if (value) {
             //store user info in Firebase object (might be useful later on)
             Firebase.userInfo = {userEmail: value.e_mail, userPass: value.password};
             //sign the user in with given credentials -> alert with message if they already exist
-            Firebase.auth
+            firebase.auth()
                 .signInWithEmailAndPassword(value.e_mail, value.password)
-                .then( () => { this.props.navigation.navigate("TabNavigation"); })
+                .then( () => { 
+                    const { currentUser } = firebase.auth();
+
+                    firebase.database().ref(`/users/${currentUser.uid}/has_house`)
+                        .on('value', (snapshot) => {
+                            const has_house = snapshot.val();
+                            if (has_house) {
+                                this.props.navigation.navigate("TabNavigation");
+                            } else{
+                                this.props.navigation.navigate("HouseSetup");
+                            }
+                        });
+
+                })
                 .catch((err) => { alert(err)});
         }
     };
@@ -134,12 +149,13 @@ const formStyles = {
     },
     textbox: {
         normal: {
-            color: 'white',
+            color: 'black',
             borderWidth: 1,
-            borderColor:'#415180',
+            borderColor:'#E5E5E5',
+            backgroundColor: '#F5F5F5',
             borderRadius: 4,
             height: 36,
-            marginBottom: 5
+            marginBottom: 8
         },
         error: {
             color: 'white',
@@ -158,7 +174,7 @@ const formStyles = {
         borderWidth: 1,
         borderRadius: 8,
         alignSelf: 'stretch',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 };
 
@@ -169,7 +185,8 @@ const options = {
             label: 'Email:'
         },
         password: {
-            label: 'Password:'
+            label: 'Password:',
+            secureTextEntry: true
         },
     },
     stylesheet: formStyles,
