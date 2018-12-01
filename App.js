@@ -12,6 +12,7 @@ import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
 import WIPScreen from './src/screens/WIPScreen';
 import Firebase from  './src/components/Firebase';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 
 /**
  * Class required for top navigation bar's House Mates Logo image.
@@ -37,6 +38,9 @@ const RootStack = createStackNavigator(
         },
         LogIn: {
             screen: LogInScreen
+        },
+        ForgotPassword: {
+            screen: ForgotPasswordScreen
         },
         SignUp: {
             screen: SignUpScreen
