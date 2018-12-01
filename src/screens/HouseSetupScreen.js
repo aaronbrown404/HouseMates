@@ -4,7 +4,12 @@ import {Image, Text, StyleSheet, View} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
-import { joinCreateHouse } from '../components/DatabaseAPI';
+import firebase from 'firebase';
+
+import { 
+    joinCreateHouse,
+    setHouseName
+} from '../components/DatabaseAPI';
 
 const Form = tForm.form.Form;
 const User = tForm.struct({

@@ -4,7 +4,9 @@ import { Text, KeyboardAvoidingView, StyleSheet, View, Image, ScrollView } from 
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
-import { createTask } from '../components/DatabaseAPI';
+import { 
+  createTask,
+} from '../components/DatabaseAPI';
 
 //Variable for cycle lengths.
 var Cycle = tForm.enums({
@@ -13,19 +15,19 @@ var Cycle = tForm.enums({
   Monthly: 'Monthly'
 });
 var Weight = tForm.enums({
-    1: 'Low',
-    2: 'Medium',
-    3: 'High'
+  1: 'Low',
+  2: 'Medium',
+  3: 'High'
 });
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
 const User = tForm.struct({
-    name: tForm.String,
-    desc: tForm.maybe(tForm.String),
-    weight: Weight,
-    deadline: tForm.Date,
-    reminder: tForm.Boolean,
-    cycle: Cycle,
+  name: tForm.String,
+  desc: tForm.maybe(tForm.String),
+  weight: Weight,
+  deadline: tForm.Date,
+  reminder: tForm.Boolean,
+  cycle: Cycle,
 });
 export default class CreateTaskScreen extends Component {
   // Constructor initializes name, deadline, desc to "".
@@ -38,6 +40,7 @@ export default class CreateTaskScreen extends Component {
   static navigationOptions = {
     header: null
   };
+
   /**
    * handleSubmit_TaskSubmit()
    * When the "CREATE" button is pressed, this function is called.
@@ -46,20 +49,21 @@ export default class CreateTaskScreen extends Component {
    * TODO: Needs to talk to the database and create a new task on the Household Screen.
    */
   handleSubmit_TaskSubmit = () => {
-      // {name, desc, cycle, reminder, deadline}
-      const value = this._form.getValue();
-      if (value) {
-          createTask( {
-              name : value.name,
-              deadline : String(value.deadline),
-              desc : value.desc,
-              reminder : value.reminder,
-              cycle : value.cycle,
-              weight: value.weight
-          });
-          this.props.navigation.navigate("Household");
-      }
+    // {name, desc, cycle, reminder, deadline}
+    const value = this._form.getValue();
+    if (value) {
+        createTask( {
+          name : value.name, 
+          deadline : String(value.deadline), 
+          desc : value.desc, 
+          reminder : value.reminder, 
+          cycle : value.cycle, 
+          weight: value.weight
+        });
+        this.props.navigation.navigate("Household");
+    }
   };
+
   onChange(value) {
     this.setState({value});
   };

@@ -4,6 +4,11 @@ import React, { Component } from "react";
 import {Text, View, StyleSheet} from "react-native";
 import {Card, CardItem, Thumbnail, Left, Right, Button, Icon} from 'native-base';
 import firebase from 'firebase';
+import {
+    getFirstName,
+    deleteTask
+} from '../components/DatabaseAPI';
+
 
 /**
  * class CardComponent
@@ -29,11 +34,7 @@ export default class CardComponent extends Component {
     componentWillMount() {
         const { currentUser } = firebase.auth();
 
-        firebase.database().ref(`/users/${currentUser.uid}/first_name`)
-            .on( 'value', (snapshot) => {
-                const firstName = snapshot.val();
-                this.setState({user: firstName})
-            });
+        getFirstName().once('value', (snapshot) => { this.setState({user : snapshot.val()}); });
     }
 
     render() {
@@ -65,8 +66,8 @@ export default class CardComponent extends Component {
                         </View>
                     </Left>
                     <Right>
-                        <View style={{flexDirection: 'row'}}>
-                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Task Deleted!")}>
+                        <View style={{flexDirection: 'column'}}>
+                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>alert("Task Deleted!")}>
                                 <Icon name='ios-trash' style={{color: 'white'}}/>
                             </Button>
                             <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>

@@ -1,9 +1,14 @@
 import React from "react";
 import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {Container, Content, Icon} from "native-base";
-import { getHouseTasks, getHouseUsers } from '../components/DatabaseAPI';
 import Button from 'react-native-button';
-
+import {
+    getHouseTasks,
+    assignTask,
+    getUserTasks,
+    reassignAllTasks,
+    getHouseUsers // TEMP
+} from '../components/DatabaseAPI';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from "../components/HouseholdCardComponent";
 
@@ -14,12 +19,21 @@ import CardComponent from "../components/HouseholdCardComponent";
  * HouseholdCardComponent.js
  */
 export default class HouseholdScreen extends React.Component {
+    static navigationOptions = {
+        title: "My Household",
+        tabBarIcon: ({tintColor})=>(
+            <Icon name='ios-home' style={{color: tintColor}} />
+        )
+    };
+
+    /* Ctor: Sets up init state for page */
     constructor (props) {
         super(props);
         this.state = {
             firstQuery: '',
             tasks: [],
-            refreshing: false
+            refreshing: false,
+            users: [{}]
         }
     }
 
@@ -32,6 +46,10 @@ export default class HouseholdScreen extends React.Component {
         }.bind(this));
     }
 
+    reassignAllTasks() {
+        reassignAllTasks();
+    }
+
     /* Prior to rendering set up initial page */
     componentWillMount() {
         this.updateHouseTasks();
@@ -41,12 +59,7 @@ export default class HouseholdScreen extends React.Component {
             .catch(e => alert(e));
     }
 
-    static navigationOptions = {
-        title: "My Household",
-        tabBarIcon: ({tintColor})=>(
-            <Icon name='ios-home' style={{color: tintColor}} />
-        )
-    };
+
 
     handleSubmit_CreateTask = () => {
         this.props.navigation.navigate("CreateTask");
@@ -55,6 +68,14 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
+                <View style={{padding: 10}}>
+                    <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                            onPress={this.reassignAllTasks}
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                                backgroundColor: 'red' }}>
+                        Reassign All Tasks
+                    </Button>
+                </View>
                 <FlatList
                     data={this.state.tasks}
                     renderItem={ ({item}) =>
@@ -64,12 +85,13 @@ export default class HouseholdScreen extends React.Component {
                             cycle={item.cycle}
                             reminder={item.reminder}
                             deadline={item.deadline}
+                            task_id = {item.task_id}
                             imageSource={1}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}
                     refreshing={this.state.refreshing}
-                    onRefresh={this.componentWillMount.bind(this)}
+                    onRefresh={this.updateHouseTasks.bind(this)}
                 />
                 <View style={{padding: 10}}>
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
@@ -87,6 +109,6 @@ export default class HouseholdScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: '#415180'
+        backgroundColor: '#F5F5F5'
     }
 });
