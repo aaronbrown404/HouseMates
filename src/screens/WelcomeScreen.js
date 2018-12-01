@@ -5,7 +5,7 @@ import React from "react";
 
 
 export default class WelcomeScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
     }
@@ -39,11 +39,12 @@ export default class WelcomeScreen extends Component {
      * WARNING! Image path may need to be updated depending on directory hierarchy.
      * @returns {Layout}
      */
+    //source={require("../assets/HouseMates_splashBackground_crop02.png")}>
     render() {
         const resizeMode = 'cover';
         return (
             <ImageBackground style={{flex: 1, resizeMode}}
-                             source={require("../assets/HouseMates_splashBackground_crop02.png")}>
+                             source={require("../assets/back.png")}>
                 <View style={[styles.box_Logo]}>
                     <Image style={{flex:1, height:undefined, width:undefined}}
                            source={require("../assets/HouseMatesPNGLogo_dirtySlogan_ovalBackground.png")}
@@ -51,17 +52,17 @@ export default class WelcomeScreen extends Component {
                 </View>
                 <View style={{flex: 4}}>
                     <View style={[styles.box_Form01]}>
-                        <Button style={{fontSize: 18, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
+                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
                                 onPress={this.handleSubmit_LogIn}
-                                containerStyle={{ padding: 16, height: 60, width: 260, overflow: 'hidden', borderRadius: 2,
+                                containerStyle={{ padding: 16, height: 50, width: 260, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: '#283350' }}>
                             LOG IN
                         </Button>
                     </View>
                     <View style={[styles.box_Form02]}>
-                        <Button style={{fontSize: 18, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
+                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
                                 onPress={this.handleSubmit_SignUp}
-                                containerStyle={{ padding: 16, height: 60, width: 260, overflow: 'hidden', borderRadius: 2,
+                                containerStyle={{ padding: 16, height: 50, width: 260, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: '#283350' }}>
                             SIGN UP
                         </Button>

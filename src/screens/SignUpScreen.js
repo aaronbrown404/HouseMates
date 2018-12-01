@@ -20,7 +20,7 @@ const User = tForm.struct({
 });
 
 export default class SignUpScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
         this.state = { name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "" };
@@ -44,7 +44,9 @@ export default class SignUpScreen extends Component {
         const value = this._form.getValue();
         const { currentUser } = firebase.auth();
 
-        if (value) {
+        if (value.password !== value.verify_password) {
+            alert('Passwords must match!');
+        } else if (value) {
             //store user info in Firebase object (might be useful later on)
             Firebase.userInfo = {userEmail: value.e_mail, userName: value.name, userPass: value.password};
             //create the user with given credentials -> alert with message if they already exist
@@ -163,10 +165,12 @@ const options = {
             label: 'Email:'
         },
         password: {
-            label: 'Password:'
+            label: 'Password:',
+            secureTextEntry: true
         },
         verify_password: {
-            label: 'Verify Password:'
+            label: 'Verify Password:',
+            secureTextEntry: true
         }
     },
     stylesheet: formStyles,
