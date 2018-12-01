@@ -13,10 +13,12 @@ import {
 
 const Form = tForm.form.Form;
 const User = tForm.struct({
-    houseID: tForm.String,
+    joinCode: tForm.maybe(tForm.String),
+    newCode: tForm.maybe(tForm.String)
 });
+
 export default class HouseSetupScreen extends Component {
-    // Constructor initializes houseID to "".
+    // Constructor initializes joinCode to "".
     constructor(props) {
         super(props);
         this.state = {nameID: ""};
@@ -28,35 +30,19 @@ export default class HouseSetupScreen extends Component {
         header: null
     };
 
-    /**
-     * handleSubmit_CreateHome()
-     * When the create button is pressed, this function is called.
-     * It simply proceeds to the next screen.
-     * TODO: add houseID generation here
-     */
-    handleSubmit_CreateJoinHome = () => {
-            const house_name = this._form.getValue().houseID   
-            const { currentUser } = firebase.auth();
-            joinCreateHouse(house_name).then(() => {
-                this.props.navigation.navigate("TabNavigation");
-            });
-            // // Set user's housename
-            // firebase.database().ref(`/users/${currentUser.uid}/house_id`).set( house_name );
-
-            // // (!) Cannot use Database API, because we must navigate AFTER hosue has been created
-
-            // // Sets the user's house_name' field
-            // firebase.database().ref(`/users/${currentUser.uid}/house_id`)
-            //     .set( house_name )
-            //     .then(() => {
-            //         // Set hashosue to true
-            //         firebase.database().ref(`/users/${currentUser.uid}/has_house`).set(true);            
-
-            //         // Add the userID the the household's field 'users' (user's list)
-            //         firebase.database().ref(`/houses/${house_name}/users`)
-            //         .push(currentUser.uid)
-            //             .then(() => {this.props.navigation.navigate("TabNavigation");});
-            //     });
+    createHome = () => {
+        const value = this._form.getValue();
+        if (value.newCode) {
+            joinCreateHouse(value.newCode);
+            this.props.navigation.navigate("TabNavigation");
+        }
+    };
+    joinHome = () => {
+        const value = this._form.getValue(); 
+        if (value.joinCode) {
+            joinCreateHouse(value.joinCode);
+            this.props.navigation.navigate("TabNavigation");
+        }
     };
 
     onChange(value) {
@@ -73,34 +59,30 @@ export default class HouseSetupScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.box_Option1}>
-                    <Image style={{flex: 1, height:undefined, width:undefined}}
-                           source={require("../assets/HouseMates_newHouse_outlinedTEST_noBackground.png")}
-                           resizeMode="contain"/>
-
                     <Form ref={c => this._form = c}
                           type={User}
                           value={this.state.value}
                           onChange={this.onChange}
-                          options={options}/>
+                          options={optionsJ}/>
 
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.handleSubmit_CreateJoinHome}
+                            onPress={this.joinHome}
                             containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                backgroundColor: '#6171A0' }}>
+                                backgroundColor: '#283350'}}>
                         JOIN EXISTING HOUSEHOLD
                     </Button>
                 </View>
-
                 <View style={styles.box_Option2}>
-                    <View style={styles.box_Text}>
-                        <Text style={[styles.text_SubTitle2]}>
-                            Or...
-                        </Text>
-                    </View>
+                    <Form ref={c => this._form = c}
+                          type={User}
+                          value={this.state.value}
+                          onChange={this.onChange}
+                          options={optionsC}/>
+
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.handleSubmit_CreateJoinHome}
+                            onPress={this.createHome}
                             containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                backgroundColor: '#6171A0' }}>
+                                backgroundColor: '#283350' }}>
                         CREATE NEW HOUSEHOLD
                     </Button>
                 </View>
@@ -124,9 +106,9 @@ const formStyles = {
     },
     textbox: {
         normal: {
-            color: 'white',
+            color: 'black',
             borderWidth: 1,
-            borderColor:'white',
+            borderColor:'#283350',
             borderRadius: 4,
             height: 36,
             marginBottom: 5
@@ -141,35 +123,52 @@ const formStyles = {
     },
 };
 // The following edits the fields of the form. This format is required for the API.
-const options = {
+const optionsJ = {
     fields: {
-        houseID: {
+        newCode: {
+            hidden: true
+        },
+        joinCode: {
             label: ' ',
-            placeholder: 'Code',
+            placeholder: ' Join Code...',
+            color: '#a9a9a9'
         }
     },
     stylesheet: formStyles,
 };
+const optionsC = {
+    fields: {
+        joinCode: {
+            hidden: true
+        },
+        newCode: {
+            label: ' ',
+            placeholder: ' Enter new house name...',
+            color: '#a9a9a9'
+        }
+    },
+    stylesheet: formStyles,
+}
 // StyleSheet for the sign up screen.
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
-        backgroundColor: '#283350',
+        backgroundColor: 'white',
         paddingLeft: 16,
         paddingRight: 16,
     },
     box_Option1: {
-        flex: 12,
-        backgroundColor: '#415180',
+        flex: 2,
+        backgroundColor: 'white',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         padding: 10
     },
     box_Option2: {
-        flex: 6,
-        backgroundColor: '#415180',
+        flex: 2,
+        backgroundColor: 'white',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: 10
@@ -180,10 +179,10 @@ const styles = StyleSheet.create({
     text_Title: {
         fontWeight: 'bold',
         fontSize: 40,
-        color: '#415180'
+        color: 'white'
     },
     text_SubTitle: {
-        color: '#415180',
+        color: 'white',
         fontSize: 16,
         alignItems: 'center',
         padding: 0

@@ -8,6 +8,8 @@ import {
     getFirstName,
     deleteTask
 } from '../components/DatabaseAPI';
+
+
 /**
  * class CardComponent
  * Sets the layout for the cards utilized in HouseholdScreen.js
@@ -25,7 +27,6 @@ export default class CardComponent extends Component {
             cycle: this.props.cycle,
             reminder: this.props.reminder,
             deadline: this.props.deadline,
-            task_id: this.props.task_id,
             imageSource: this.props.imageSource
         };
     }
@@ -33,7 +34,7 @@ export default class CardComponent extends Component {
     componentWillMount() {
         const { currentUser } = firebase.auth();
 
-        getFirstName().once('value', (snapshot) => { this.setState({user : snapshot.val()}); });  
+        getFirstName().once('value', (snapshot) => { this.setState({user : snapshot.val()}); });
     }
 
     render() {
@@ -60,16 +61,16 @@ export default class CardComponent extends Component {
                             <Text style={{fontWeight: 'bold'}}>
                                 {this.state.name}
                             </Text>
-                            <Text style={{}}>{this.state.desc}</Text>
+                            <Text>{this.state.desc}</Text>
                             <Text>{this.state.deadline}</Text>
                         </View>
                     </Left>
                     <Right>
                         <View style={{flexDirection: 'column'}}>
-                            <Button style={styles.button} onPress={()=>{deleteTask(this.state.task_id); alert("Task deleted.")}}>
+                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>alert("Task Deleted!")}>
                                 <Icon name='ios-trash' style={{color: 'white'}}/>
                             </Button>
-                            <Button style={{backgroundColor: '#415180', marginTop: 5}} onPress={()=>alert("Reminder Sent!")}>
+                            <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>
                                 <Icon name='ios-notifications' style={{color: 'white'}}/>
                             </Button>
                         </View>
@@ -80,14 +81,7 @@ export default class CardComponent extends Component {
     }
 }
 
-
 const styles = StyleSheet.create({
-    button: {
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#007aff',
-        backgroundColor: '#415180'
-    },
     container: {
         flex:1,
         alignItems: 'center',

@@ -6,6 +6,7 @@ import Button from 'react-native-button';
 import Firebase from "../components/Firebase";
 import { setLastName, setFirstName, setHasHouse } from '../components/DatabaseAPI';
 import firebase from 'firebase';
+import ImageUpload from "../components/ImageUpload"
 
 
 // Form and User initialize the user input fields.
@@ -19,7 +20,7 @@ const User = tForm.struct({
 });
 
 export default class SignUpScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
         this.state = { name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "" };
@@ -43,7 +44,9 @@ export default class SignUpScreen extends Component {
         const value = this._form.getValue();
         const { currentUser } = firebase.auth();
 
-        if (value) {
+        if (value.password !== value.verify_password) {
+            alert('Passwords must match!');
+        } else if (value) {
             //store user info in Firebase object (might be useful later on)
             Firebase.userInfo = {userEmail: value.e_mail, userName: value.name, userPass: value.password};
             //create the user with given credentials -> alert with message if they already exist
@@ -88,12 +91,14 @@ export default class SignUpScreen extends Component {
                                   value={this.state.value}
                                   onChange={this.onChange}
                                   options={options}/>
+                            <ImageUpload />
                             <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                     onPress={this.handleSubmit_SignUp}
                                     containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
                                         backgroundColor: '#415180' }}>
                                 SIGN UP
                             </Button>
+
                         </View>
                     </View>
             </KeyboardAvoidingView>
@@ -160,10 +165,12 @@ const options = {
             label: 'Email:'
         },
         password: {
-            label: 'Password:'
+            label: 'Password:',
+            secureTextEntry: true
         },
         verify_password: {
-            label: 'Verify Password:'
+            label: 'Verify Password:',
+            secureTextEntry: true
         }
     },
     stylesheet: formStyles,
@@ -174,7 +181,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#283350',
+        backgroundColor: 'white',
         paddingLeft: 16,
         paddingRight: 16,
         // This field can be changed to adjust style.

@@ -68,7 +68,9 @@ export default class CreateTaskScreen extends Component {
     this.setState({value});
   };
 
-
+  go_back = () => {
+      this.props.navigation.navigate("TabNavigation");
+  };
   /**
    * render()
    * Layout for the sign up screen.
@@ -79,6 +81,15 @@ export default class CreateTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <View style={{paddingTop: 15}}>
+            <Button
+                style={{fontWeight: 'bold', fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
+                containerStyle={{ paddingTop: 10, padding: 11, height: 45, overflow: 'hidden', borderRadius: 4, backgroundColor: '#6171A0' }}
+                onPress={this.go_back}
+            >
+                GO BACK
+            </Button>
+        </View>
         <Image style={{flex: 1, height:undefined, width:undefined}}
             source={require("../assets/HouseMatesPNG_CreateTask_04.png")}
             resizeMode="contain"/>
@@ -151,30 +162,30 @@ const formStyles = {
 };
 // The following edits the fields of the form. This format is required for the API.
 const options = {
-  fields: {
-    name: {
-      label: 'Name:'
+    fields: {
+        name: {
+            label: 'Name:'
+        },
+        desc: {
+            multiline: true,
+            numberOfLines: 3,
+            label: 'Description:'
+        },
+        deadline: {
+            label: 'Deadline:',
+            mode: 'date'
+        },
+        reminder: {
+            label: 'Enable Reminder?'
+        },
+        cycle: {
+            label: 'Task renews...'
+        },
+        weight: {
+            label: 'Task difficulty'
+        }
     },
-    desc: {
-      multiline: true,
-      numberOfLines: 3,
-      label: 'Description:'
-    },
-    deadline: {
-      label: 'Deadline:',
-      mode: 'date'
-    },
-    reminder: {
-      label: 'Enable Reminder?'
-    },
-    cycle: {
-      label: 'Task renews...'
-    },
-    weight: {
-      label: 'Task difficulty'
-    }
-  },
-  stylesheet: formStyles,
+    stylesheet: formStyles,
 };
 // StyleSheet for the sign up screen.
 const styles = StyleSheet.create({

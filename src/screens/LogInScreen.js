@@ -1,5 +1,5 @@
 import {Component} from "react";
-import { Image, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
@@ -14,7 +14,7 @@ const User = tForm.struct({
 });
 
 export default class WelcomeScreen extends Component {
-    // Constructor initializes name, phoneNumber, houseID, and houseName to "".
+    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
         this.state = { e_mail: "", password: "" };
@@ -175,7 +175,8 @@ const options = {
             label: 'Email:'
         },
         password: {
-            label: 'Password:'
+            label: 'Password:',
+            secureTextEntry: true
         },
     },
     stylesheet: formStyles,

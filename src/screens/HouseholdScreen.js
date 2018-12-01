@@ -1,8 +1,6 @@
 import React from "react";
 import {StyleSheet, View, FlatList, Text} from 'react-native';
 import {Container, Content, Icon} from "native-base";
-import firebase from 'firebase';
-import _ from 'lodash';
 import Button from 'react-native-button';
 import {
     getHouseTasks,
@@ -20,7 +18,6 @@ import CardComponent from "../components/HouseholdCardComponent";
  * send anonymous notifications, and search through existing tasks. To change layout of cards, see
  * HouseholdCardComponent.js
  */
-
 export default class HouseholdScreen extends React.Component {
     static navigationOptions = {
         title: "My Household",
@@ -44,7 +41,6 @@ export default class HouseholdScreen extends React.Component {
     updateHouseTasks() {
         this.setState({refreshing: true})
         getHouseTasks().then( function(results) {
-            console.log(results);
             this.setState({tasks : results});
             this.setState({refreshing : false})
         }.bind(this));
@@ -58,9 +54,9 @@ export default class HouseholdScreen extends React.Component {
     componentWillMount() {
         this.updateHouseTasks();
 
-        getHouseUsers().then( function(results) {
-            this.setState({users : results});
-        }.bind(this));
+        getHouseUsers()
+            .then( function(results) { this.setState({users : results}); }.bind(this))
+            .catch(e => alert(e));
     }
 
 
