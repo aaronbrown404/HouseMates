@@ -20,7 +20,7 @@ import WIPScreen from './src/screens/WIPScreen';
 import Firebase from  './src/components/Firebase';
 
 /**
- * Class required for top navigation bar's House Mates Logo image.
+ * Class required for top navigation bar's HouseMates Logo image.
  */
 class LogoTitle extends React.Component {
     render() {
