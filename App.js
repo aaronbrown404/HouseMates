@@ -18,6 +18,8 @@ import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
 import WIPScreen from './src/screens/WIPScreen';
 import Firebase from  './src/components/Firebase';
+import OptionsScreen from  './src/screens/OptionsScreen';
+import EditTaskScreen from './src/screens/EditTaskScreen';
 
 /**
  * Class required for top navigation bar's HouseMates Logo image.
@@ -58,13 +60,20 @@ const RootStack = createStackNavigator(
         },
         WIP: {
             screen: WIPScreen
+        },
+        Options: {
+            screen: OptionsScreen
+        },
+        EditTask: {
+            screen: EditTaskScreen
         }
+
     },
     {
         initialRouteName: 'Welcome', // Determines starting screen.
 
         //headerMode: 'screen',
-        navigationOptions: {
+        navigationOptions: ( {navigate, navigation} ) => ({
             headerTitle: <LogoTitle />,
             headerStyle: {
                 backgroundColor: '#283350',
@@ -74,12 +83,14 @@ const RootStack = createStackNavigator(
             // of the nav bar on the ToDoListScreen.js and HouseholdScreen.js.
             headerRight:
                 <Button transparent
-                        style={{justifyContent: 'center', alignSelf: 'center'}}>
+                        style={{justifyContent: 'center', alignSelf: 'center'}}
+                        onPress={() => navigation.navigate('Options')}
+                >
                     <Icon style={{color: 'white'}}
                           name="md-more"/>
                 </Button>,
             headerTintColor: "white"
-        }
+        })
     }
 );
 

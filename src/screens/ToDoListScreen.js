@@ -59,7 +59,7 @@ export default class ToDoListScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: '#415180'
+        backgroundColor: '#F5F5F5'
     }
 });
 

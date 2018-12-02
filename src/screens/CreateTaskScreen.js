@@ -14,17 +14,12 @@ var Cycle = tForm.enums({
   Weekly: 'Weekly',
   Monthly: 'Monthly'
 });
-var Weight = tForm.enums({
-  1: 'Low',
-  2: 'Medium',
-  3: 'High'
-});
+
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
 const User = tForm.struct({
   name: tForm.String,
   desc: tForm.maybe(tForm.String),
-  weight: Weight,
   deadline: tForm.Date,
   reminder: tForm.Boolean,
   cycle: Cycle,
@@ -33,7 +28,7 @@ export default class CreateTaskScreen extends Component {
   // Constructor initializes name, deadline, desc to "".
   constructor(props) {
     super(props);
-    this.state = {name: "", deadline: "", desc: "", reminder: false, cycle: "Daily", weight: null};
+    this.state = {name: "", deadline: "", desc: "", reminder: false, cycle: "Daily"};
     this.onChange=this.onChange.bind(this);
   }
   // Rids the sign up screen of the navigation bar that comes standard with 'react-navigation'.
@@ -58,7 +53,6 @@ export default class CreateTaskScreen extends Component {
           desc : value.desc, 
           reminder : value.reminder, 
           cycle : value.cycle, 
-          weight: value.weight
         });
         this.props.navigation.navigate("Household");
     }
@@ -81,15 +75,6 @@ export default class CreateTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <View style={{paddingTop: 15}}>
-            <Button
-                style={{fontWeight: 'bold', fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                containerStyle={{ paddingTop: 10, padding: 11, height: 45, overflow: 'hidden', borderRadius: 4, backgroundColor: '#6171A0' }}
-                onPress={this.go_back}
-            >
-                GO BACK
-            </Button>
-        </View>
         <Image style={{flex: 1, height:undefined, width:undefined}}
             source={require("../assets/HouseMatesPNG_CreateTask_04.png")}
             resizeMode="contain"/>
@@ -180,9 +165,6 @@ const options = {
         },
         cycle: {
             label: 'Task renews...'
-        },
-        weight: {
-            label: 'Task difficulty'
         }
     },
     stylesheet: formStyles,
@@ -199,7 +181,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   box_SubContainer: {
-    flex: 3,
+    flex: 1,
     flexDirection: 'column',
     backgroundColor: '#415180',
     paddingTop: 10,

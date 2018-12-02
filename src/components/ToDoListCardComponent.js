@@ -54,10 +54,10 @@ export default class CardComponent extends Component {
 
         var buttonColor;
         if (this.state.clicked) {
-            buttonColor = { backgroundColor: '#729b79' }
+            buttonColor = { backgroundColor: '#A3320B' } //Old red hex #729b79 
         }
         else {
-            buttonColor = { backgroundColor: '#a03e47'}
+            buttonColor = { backgroundColor: '#018E42' } // Old green hex #a03e47
         }
 
         return (
