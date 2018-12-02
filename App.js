@@ -17,6 +17,7 @@ import CreateTaskScreen from './src/screens/CreateTaskScreen';
 import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
 import Firebase from  './src/components/Firebase';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
 
 /*
 import PushNotificationIOS from 'react-native';
@@ -74,6 +75,9 @@ const RootStack = createStackNavigator(
         },
         LogIn: {
             screen: LogInScreen
+        },
+        ForgotPassword: {
+            screen: ForgotPasswordScreen
         },
         SignUp: {
             screen: SignUpScreen

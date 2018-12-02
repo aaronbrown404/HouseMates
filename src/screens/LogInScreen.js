@@ -71,6 +71,10 @@ export default class WelcomeScreen extends Component {
         this.props.navigation.navigate("SignUp")
     };
 
+    handleSubmit_ForgotPassword = () => {
+        this.props.navigation.navigate("ForgotPassword")
+    };
+
     /**
      * onChange()
      * When a value is changed in one of the fields, this allows the information to remain present even after
@@ -107,6 +111,12 @@ export default class WelcomeScreen extends Component {
                                 containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 2,
                                     backgroundColor: '#415180' }}>
                             LOG IN
+                        </Button>
+                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center'}}
+                                onPress={this.handleSubmit_ForgotPassword}
+                                containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 2,
+                                    backgroundColor: 'transparent' }}>
+                            FORGOT PASSWORD
                         </Button>
                     </View>
                     <View style={{paddingBottom: 0}}>
