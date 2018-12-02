@@ -61,7 +61,7 @@ export default class ForgotPasswordScreen extends Component {
                 <View style={[styles.box_SubContainer]}>
                     <View style={[styles.box_Title]}>
                         <Text style={styles.text_Title}>Forgot Password</Text>
-                        <Text style={styles.text_SubTitle}>Enter your email to find your account</Text>
+                        <Text style={styles.text_SubTitle}>Enter your email to find your account.</Text>
                     </View>
                     <View style={[styles.box_Form]}>
                         <Form ref={c => this._form = c}
@@ -80,7 +80,7 @@ export default class ForgotPasswordScreen extends Component {
                               }}/>
                         <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                 onPress={this.handleSubmit_ForgotPassword} // I had handleSubmit_ForgotPassword() had to remove ()
-                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: '#415180' }}>
                             SUBMIT
                         </Button>
@@ -141,7 +141,7 @@ const formStyles = {
 const options = {
     fields: {
         e_mail: {
-            label: 'Email:'
+            label: 'E-mail:'
         }
     },
     stylesheet: formStyles,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#283350',
+        backgroundColor: 'white',
         paddingLeft: 16,
         paddingRight: 16,
         // This field can be changed to adjust style.
