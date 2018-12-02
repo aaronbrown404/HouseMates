@@ -39,7 +39,7 @@ export default class ForgotPasswordScreen extends Component {
             Firebase.auth.sendPasswordResetEmail(value.e_mail)
                 .then( () => { this.props.navigation.navigate("LogIn"); })
                 .catch(function(error) {
-                // An error happened.
+                    alert(error);
             });
         }
     };
