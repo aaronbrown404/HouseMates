@@ -37,7 +37,7 @@ export default class HouseholdScreen extends React.Component {
         }
     }
 
-    /* Updates the state tasks to be the lsit of tasks */
+    /* Updates the state tasks to be the list of tasks */
     updateHouseTasks() {
         this.setState({refreshing: true})
         getHouseTasks().then( function(results) {

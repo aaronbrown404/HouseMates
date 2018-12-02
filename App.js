@@ -18,6 +18,38 @@ import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
 import Firebase from  './src/components/Firebase';
 
+/*
+import PushNotificationIOS from 'react-native';
+//var PushNotification = require('react-native-push-notification');
+import PushNotification from 'react-native-push-notification';
+
+PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function(token) {
+        console.warn(token);
+    },
+
+    onNotification: function(notification) {
+        setTimeout(() => {
+            if(!notification['foreground']){ }
+        }, 1);
+        PushNotification.localNotificationSchedule({
+            title: 'HouseMates Reminder',
+            message: notification['name'], // (required)
+            date: new Date(Date.now()) // in 60 secs
+        });
+    },
+
+    senderID: "1062239771420",
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+}); */
+
 /**
  * Class required for top navigation bar's HouseMates Logo image.
  */
@@ -84,9 +116,16 @@ const RootStack = createStackNavigator(
  */
 export default class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            user_token: '',
+        }
+    }
     componentWillMount() {
-        console.log('hello');
-        Firebase.init();
+        try {
+            Firebase.init();
+        } catch (error) {}
     }
 
     render() {
