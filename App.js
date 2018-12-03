@@ -18,6 +18,7 @@ import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
 import Firebase from  './src/components/Firebase';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import OptionsScreen from  './src/screens/OptionsScreen';
 
 /*
 import PushNotificationIOS from 'react-native';
@@ -90,28 +91,31 @@ const RootStack = createStackNavigator(
         },
         CreateTask: {
             screen: CreateTaskScreen
+        },
+        Options: {
+            screen: OptionsScreen
         }
     },
     {
         initialRouteName: 'Welcome', // Determines starting screen.
 
         //headerMode: 'screen',
-        navigationOptions: {
+        navigationOptions: ( {navigate, navigation} ) => ({
             headerTitle: <LogoTitle />,
             headerStyle: {
                 backgroundColor: '#283350',
             },
 
-            // Lacks functionality at the moment. This is the options button (three dots) at the top right
-            // of the nav bar on the ToDoListScreen.js and HouseholdScreen.js.
             headerRight:
                 <Button transparent
-                        style={{justifyContent: 'center', alignSelf: 'center'}}>
+                        style={{justifyContent: 'center', alignSelf: 'center'}}
+                        onPress={() => navigation.navigate('Options')}
+                >
                     <Icon style={{color: 'white'}}
                           name="md-more"/>
                 </Button>,
             headerTintColor: "white"
-        }
+        })
     }
 );
 
@@ -122,14 +126,13 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            user_token: '',
-        }
     }
     componentWillMount() {
         try {
             Firebase.init();
-        } catch (error) {}
+        } catch (error) {
+            //do nothing -> incase multiple init calls
+        }
     }
 
     render() {

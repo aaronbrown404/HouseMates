@@ -44,7 +44,7 @@ export default class OptionsScreen extends Component {
         });
     };
     handleSubmit_sendInvite = () => {
-        inviteHouseMate.handleEmail()
+        inviteHouseMate.handleEmail();
         this.setState({
             modalVisible: false
         });
@@ -74,16 +74,14 @@ export default class OptionsScreen extends Component {
                                transparent={true}
                                visible={this.state.modalVisible}
                                onRequestClose={()=>{alert('Invite not sent!')}}>
-                            <View style={[styles.box_SubContainer]}>
-                                <View style={[styles.box_Modal]}>
-                                <Text>HEY</Text>
+                            <View style={[styles.box_Modal]}>
+                                <Text style={styles.text_SubTitle}>ENTER EMAIL: </Text>
                                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                             onPress={this.handleSubmit_sendInvite}
                                             containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
                                             backgroundColor: '#729b79' }}>
                                         INVITE TO HOUSEHOLD
                                     </Button>
-                                </View>
                             </View>
                         </Modal>
                         <Form ref={c => this._form = c}

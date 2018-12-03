@@ -14,7 +14,7 @@ export default class inviteHouseMate extends Component {
             //cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
             //bcc: 'mee@mee.com', // string or array of email addresses
             subject: 'Join HouseMates!',
-            body: {'Download HouseMates and join my household with code: ' + this.houseCode}
+            body: 'Download HouseMates and join my household with code:  + {this.houseCode}'
         }).catch(console.error);
     };
 }
