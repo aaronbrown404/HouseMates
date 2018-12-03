@@ -3,6 +3,8 @@ import {Modal, Text, KeyboardAvoidingView, StyleSheet, View} from "react-native"
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
+import inviteHouseMate from '../components/inviteHouseMate';
+
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
 const User = tForm.struct({
@@ -42,6 +44,7 @@ export default class OptionsScreen extends Component {
         });
     };
     handleSubmit_sendInvite = () => {
+        inviteHouseMate.handleEmail()
         this.setState({
             modalVisible: false
         });

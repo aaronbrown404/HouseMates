@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#283350',
+        backgroundColor: 'white',
         paddingLeft: 16,
         paddingRight: 16,
         // This field can be changed to adjust style.
