@@ -106,15 +106,15 @@ export default class WelcomeScreen extends Component {
                               value={this.state.value}
                               onChange={this.onChange}
                               options={options}/>
-                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center'}}
+                        <Button style={{fontSize: 16, color: 'white', alignSelf: 'center'}}
                                 onPress={this.handleSubmit_LogIn}
-                                containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 2,
+                                containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: '#415180' }}>
                             LOG IN
                         </Button>
-                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center'}}
+                        <Button style={{fontSize: 14, alignSelf: 'center'}}
                                 onPress={this.handleSubmit_ForgotPassword}
-                                containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 2,
+                                containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: 'transparent' }}>
                             FORGOT PASSWORD
                         </Button>
@@ -122,7 +122,7 @@ export default class WelcomeScreen extends Component {
                     <View style={{paddingBottom: 0}}>
                         <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                 onPress={this.handleSubmit_SignUp}
-                                containerStyle={{ padding: 14, height: 55, overflow: 'hidden', borderRadius: 0,
+                                containerStyle={{ padding: 14, height: 55, overflow: 'hidden',
                                     backgroundColor: '#415180' }}>
                             NO ACCOUNT? SIGN UP!
                         </Button>
@@ -152,10 +152,11 @@ const formStyles = {
             color: 'black',
             borderWidth: 1,
             borderColor:'#E5E5E5',
-            backgroundColor: '#F5F5F5',
-            borderRadius: 4,
+            backgroundColor: 'white',
+            borderRadius: 20,
             height: 36,
-            marginBottom: 8
+            marginBottom: 8,
+            padding: 10
         },
         error: {
             color: 'white',
@@ -172,7 +173,7 @@ const formStyles = {
     button: {
         backgroundColor: '#ffd344',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 20,
         alignSelf: 'stretch',
         justifyContent: 'center',
     }
@@ -180,12 +181,13 @@ const formStyles = {
 
 // The following edits the fields of the form. This format is required for the API.
 const options = {
+    auto: 'none',
     fields: {
         e_mail: {
-            label: 'Email:'
+            placeholder: '   email'
         },
         password: {
-            label: 'Password:',
+            placeholder: '   password:',
             secureTextEntry: true
         },
     },
@@ -197,18 +199,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#283350'
+        backgroundColor: '#F5F5F5'
     },
     box_Logo: {
         flex: 4,
         marginTop: 60,
         justifyContent: 'flex-end',
-        backgroundColor: '#283350'
-
+        backgroundColor: '#F5F5F5'
     },
     box_Form: {
         flex: 4,
-        backgroundColor: '#283350',
+        backgroundColor: '#F5F5F5',
         padding: 20,
         justifyContent: 'flex-end',
 
