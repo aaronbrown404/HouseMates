@@ -28,7 +28,8 @@ export default class CardComponent extends Component {
             reminder: this.props.reminder,
             deadline: this.props.deadline,
             imageSource: this.props.imageSource,
-            task_id: this.props.task_id
+            task_id: this.props.task_id,
+            task_user: this.props.task_user
         };
     }
 
@@ -51,7 +52,7 @@ export default class CardComponent extends Component {
         return (
             <Card>
                 <CardItem bordered button onPress={ ()=>{ this.props.navigation.navigate('EditTask', {
-                        name: this.state.name,
+                        name: this.state.task_user,
                         desc: this.state.desc,
                         cycle: this.state.cycle,
                         reminder: this.state.reminder,
@@ -63,7 +64,7 @@ export default class CardComponent extends Component {
                         <View style={{flexDirection: 'column', justifyContent: 'flex-start'}}>
                             <Thumbnail source={images[this.state.imageSource]}/>
                             <Text style={{alignSelf: 'center'}}>
-                                {this.state.user}
+                                {this.state.task_user}
                             </Text>
                         </View>
                         <View style={{paddingLeft: 5}}>

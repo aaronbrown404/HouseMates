@@ -1,5 +1,5 @@
 // This replaced CreateTaskScreen and will be prompted to show on editTask or createTask button press.
-import {Component} from "react";
+import { Component } from "react";
 import { Text, KeyboardAvoidingView, StyleSheet, View, Image, ScrollView } from "react-native";
 import Button from 'react-native-button';
 import React from "react";

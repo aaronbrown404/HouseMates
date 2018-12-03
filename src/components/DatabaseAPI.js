@@ -28,6 +28,18 @@ export const setHasHouse = (has_house) => {
 	return firebase.database().ref(`/users/${currentUser.uid}/has_house`).set( has_house );
 }
 
+/* Sets the user's last name under 'last_name' field. */
+export const setTaskCompleted = (task_id, completed) => {
+	const { currentUser } = firebase.auth();
+	return firebase.database().ref(`/tasks/${task_id}/complete`).set( completed );
+}
+
+/* Sets the user's last name under 'last_name' field. */
+export const getTaskCompleted = (task_id) => {
+	const { currentUser } = firebase.auth();
+	return firebase.database().ref(`/tasks/${task_id}/complete`);
+}
+
 /** 
  * Given a house_name (which is equivalent to a house ID) the user 
  * will join that house. If the hosue does not exist the house will
@@ -74,7 +86,7 @@ export const createTask = ({name, desc, cycle, reminder, deadline}) => {
 	const { currentUser } = firebase.auth();
 
 	// Create the task under the field and save the ID
-	const newTaskRef = firebase.database().ref(`/tasks`).push( {name, desc, cycle, reminder, deadline} );
+	const newTaskRef = firebase.database().ref(`/tasks`).push( {name, desc, cycle, reminder, deadline, complete : false} );
 
 	// Take task id, put it house's tasks.	
 	firebase.database().ref(`/users/${currentUser.uid}/house_id`)
@@ -160,7 +172,7 @@ export const getUserTasks = () => {
 			for (taskID of task_ids) {
                 console.log(taskID);
                 task_promises.push(
-                    firebase.database().ref(`/tasks/${taskID}`).once('value').then( snapshot => {return snapshot.val();})
+                    firebase.database().ref(`/tasks/${taskID}`).once('value').then( snapshot => {return { ...snapshot.val(), task_id: snapshot.key };})
                 );
             }
             return Promise.all(task_promises);
@@ -189,12 +201,12 @@ export const getLastName = () => {
 
 export const getTasksUser = (task_id) => {
 	const { currentUser } = firebase.auth();
-
+	return;
 	return getHouseUsers().then((result) => {
 		for (userId of result) {
 			firebase.database().ref(`/users/${currentUser.uid}/tasks/${task_id}`).once('value').then((snapshot) => {
 				if (snapshot && snapshot.exists()) {
-					return firebase.database().ref(`/users/${currentUser.uid}/first_name`).on('value').then((snapshot) => {
+					return firebase.database().ref(`/users/${currentUser.uid}/first_name`).once('value').then((snapshot) => {
 						return snapshot.val();
 					});
 				}
@@ -264,7 +276,14 @@ export const assignTask = (taskId) => {
 					// Set current user
 					return setUserTask( userList[cur_user_indx].user_id, taskId).then(() => {
 						// Update current user index
-						return firebase.database().ref(`/houses/${house_id}/cur_user`).set(((cur_user_indx + 1) % userList.length));
+						return firebase.database().ref(`/houses/${house_id}/cur_user`).set(((cur_user_indx + 1) % userList.length))
+							.then(() => {
+
+								return firebase.database().ref(`/users/${userList[cur_user_indx].user_id}/first_name`).once('value')
+									.then((snapshot) => {
+										return firebase.database().ref(`/tasks/${taskId}/user`).set(snapshot.val());
+									});
+							});
 					})
 				});
 			});

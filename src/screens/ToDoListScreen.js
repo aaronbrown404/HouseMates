@@ -22,7 +22,10 @@ export default class ToDoListScreen extends React.Component {
 
     componentWillMount() {
         getUserTasks()
-            .then( function(results) { this.setState({tasks: results}); }.bind(this))
+            .then( function(results) { 
+                this.setState({ tasks: [] }); 
+                this.setState({ tasks: results }); 
+            }.bind(this))
             .catch(e => alert(e));
     }
 
@@ -45,6 +48,9 @@ export default class ToDoListScreen extends React.Component {
                             cycle={item.cycle}
                             reminder={item.reminder}
                             deadline={item.deadline}
+                            task_id = {item.task_id}
+                            task_user = {item.user}
+                            complete = {item.complete}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}

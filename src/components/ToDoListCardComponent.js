@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Text, View, StyleSheet} from "react-native";
 import { Card, CardItem, Thumbnail, Body, Left} from 'native-base';
+import {setTaskCompleted, getTaskCompleted} from "../components/DatabaseAPI";
 
 /**
  * class CardComponent
@@ -12,32 +13,62 @@ export default class CardComponent extends Component {
     // TODO: More fields will be needed.
     constructor (props) {
         super(props);
+        var buttonColor;
+
         this.state = {
-            textValue: 'COMPLETE TASK',
+            textValue: "",
             clicked: false,
             name: this.props.name,
             desc: this.props.desc,
             cycle: this.props.cycle,
             reminder: this.props.reminder,
-            deadline: this.props.deadline
+            deadline: this.props.deadline,
+            task_id: this.props.task_id,
+            complete: this.props.complete,
+            buttonColor: buttonColor
         }
+    }
+
+    componentWillMount() {
+        getTaskCompleted(this.state.task_id).once('value', (snapshot) => {
+            console.log(snapshot);
+            console.log(snapshot.val());
+            let completed = "TAP TO COMPLETE TASK";
+            this.setState( { buttonColor : { backgroundColor: '#A3320B' } }); //Old red hex #729b79 
+            if(snapshot.val()) {
+                completed = "TASK COMPLETED";
+                this.setState( {buttonColor : { backgroundColor: '#018E42' } });
+            }
+
+            this.setState({ textValue: completed });
+        });
+
     }
 
     // Allows for a test implementation of the chore completion toggle.
     // TODO: Needs to update the database of task completion.
     onButtonPress = () => {
-        if (this.state.clicked) {
+        console.log(this.state.task_id);
+        if (this.state.complete) {
             this.setState({
-                textValue: 'COMPLETE TASK',
+                textValue: 'TAP TO COMPLETE TASK',
                 clicked: false
             })
+            setTaskCompleted(this.state.task_id, false).then(() => {
+                this.setState({complete : false});
+                this.setState( { buttonColor : { backgroundColor: '#A3320B' } }); //Old red hex #729b79 
 
+            });
         }
         else {
             this.setState({
                 textValue: 'TASK COMPLETED',
                 clicked: true
             })
+            setTaskCompleted(this.state.task_id, true).then(() => {
+                this.setState({complete : true});
+                this.setState( {buttonColor : { backgroundColor: '#018E42' } });
+            });
         }
     };
 
@@ -53,7 +84,7 @@ export default class CardComponent extends Component {
         };
 
         var buttonColor;
-        if (this.state.clicked) {
+        if (!this.state.complete) {
             buttonColor = { backgroundColor: '#A3320B' } //Old red hex #729b79 
         }
         else {
@@ -71,7 +102,7 @@ export default class CardComponent extends Component {
                         </View>
                     </Left>
                 </CardItem>
-                <CardItem style={buttonColor} footer button onPress={this.onButtonPress}>
+                <CardItem style={this.buttonColor} footer button onPress={this.onButtonPress.bind(this)}>
                     <Body>
                     <Text style={styles.text_Button}>{this.state.textValue}</Text>
                     </Body>

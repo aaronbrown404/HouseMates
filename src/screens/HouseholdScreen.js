@@ -56,9 +56,9 @@ export default class HouseholdScreen extends React.Component {
     componentWillMount() {
         this.updateHouseTasks();
         console.log("Getting  tasks user");
-        getTasksUser("-LSilf0GmlxrggukBcJ3").then((result) => {
-            console.log(result);
-        });
+        // getTasksUser("-LSilf0GmlxrggukBcJ3").then((result) => {
+        //     console.log(result);
+        // });
         getHouseUsers()
             .then( function(results) { this.setState({users : results}); }.bind(this))
             .catch(e => alert(e));
@@ -85,6 +85,7 @@ export default class HouseholdScreen extends React.Component {
                             reminder={item.reminder}
                             deadline={item.deadline}
                             task_id = {item.task_id}
+                            task_user = {item.user}
                             updateTaskList = {this.updateHouseTasks.bind(this)}
                             navigation={this.props.navigation}
                             imageSource={1}
