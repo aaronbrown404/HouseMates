@@ -7,6 +7,7 @@ import tForm from 'tcomb-form-native';
 import { 
   createTask,
 } from '../components/DatabaseAPI';
+import Banner from '../components/Banner';
 
 //Variable for cycle lengths.
 var Cycle = tForm.enums({
@@ -75,9 +76,9 @@ export default class CreateTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Image style={{flex: 1, height:undefined, width:undefined}}
-            source={require("../assets/HouseMatesPNG_CreateTask_04.png")}
-            resizeMode="contain"/>
+          <View style={{alignItems: 'center', justifyContent: 'center', paddingTop:10, paddingBottom: 0, flex: 1}}>
+              <Text style={styles.box_Title2}>CREATE TASK</Text>
+          </View>
         <ScrollView>
         <View style={[styles.box_SubContainer]}>
           <View style={[styles.box_Form]}>
@@ -89,9 +90,9 @@ export default class CreateTaskScreen extends Component {
 
             <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                 onPress={this.handleSubmit_TaskSubmit}
-                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                   backgroundColor: '#6171A0' }}>
-              FINALIZE
+                SAVE
             </Button>
           </View>
         </View>
@@ -121,9 +122,10 @@ const formStyles = {
       color: '#415180',
       borderWidth: 1,
       borderColor:'#415180',
-      borderRadius: 4,
+      borderRadius: 20,
       height: 36,
-      marginBottom: 5
+      marginBottom: 5,
+        padding: 10
     },
     error: {
       color: '#415180',
@@ -140,7 +142,7 @@ const formStyles = {
   button: {
     backgroundColor: '#ffd344',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 20,
     alignSelf: 'stretch',
     justifyContent: 'center'
   }
@@ -149,22 +151,22 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: 'Name:'
+            label: '  name:'
         },
         desc: {
             multiline: true,
             numberOfLines: 3,
-            label: 'Description:'
+            label: '  description:'
         },
         deadline: {
-            label: 'Deadline:',
+            label: '  deadline:',
             mode: 'date'
         },
         reminder: {
-            label: 'Enable Reminder?'
+            label: '  enable reminder?'
         },
         cycle: {
-            label: 'Task renews...'
+            label: '  task renews...'
         }
     },
     stylesheet: formStyles,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#283350',
+    backgroundColor: '#F5F5F5',
     paddingLeft: 16,
     paddingRight: 16,
     // This field can be changed to adjust style.
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
   box_SubContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#415180',
+    backgroundColor: '#F5F5F5',
     paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10
@@ -195,9 +197,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#415180',
   },
+    box_Title2: {
+        margin: 'auto',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        alignSelf: 'center',
+        fontSize: 40,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#415180',
+    },
   box_Form: {
-    flex: 3,
-    backgroundColor: 'white',
+    flex: 1,
+    backgroundColor: '#F5F5F5',
     padding: 20,
     justifyContent: 'flex-start',
   },

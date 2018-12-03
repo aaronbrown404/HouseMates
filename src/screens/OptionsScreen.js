@@ -222,12 +222,13 @@ const formStyles = {
 };
 // The following edits the fields of the form. This format is required for the API.
 const options = {
+    auto: 'none',
     fields: {
         name: {
-            label: '   Update Name:'
+            placeholder: '  update name'
         },
         phoneNumber: {
-            label: '   Update Phone Number:'
+            placeholder: '  update phone number'
         }
     },
     stylesheet: formStyles,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     box_ContainerModal: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#F5F5F5'
+        backgroundColor: 'transparent'
     },
     box_Title: {
         paddingTop: 30,
@@ -281,6 +282,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 20,
+        backgroundColor: 'transparent'
     },
     text_Title: {
         fontWeight: 'bold',

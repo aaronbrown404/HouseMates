@@ -46,9 +46,9 @@ export default class EditTaskScreen extends Component {
     let deadline = new Date(navigation.getParam('deadline', 'NO-ID'));
     let reminder = navigation.getParam('reminder', 'NO-ID');
     let task_id = navigation.getParam('task_id', 'NO-ID');
+    let task_user = navigation.getParam('task_user', 'NO-ID');
     this.setState({task_id : task_id});
-    let initState = {name, desc, cycle, reminder, deadline}
-
+    let initState = {name, desc, cycle, reminder, deadline};
 
     this.setState({value : initState})
     console.log(this.state);
@@ -64,6 +64,7 @@ export default class EditTaskScreen extends Component {
    */
   handleSubmit_TaskSubmit = () => {
     // {name, desc, cycle, reminder, deadline}
+      var { navigation } = this.props;
     const value = this._form.getValue();
     console.log(value);
     if (value) {
@@ -72,7 +73,8 @@ export default class EditTaskScreen extends Component {
           deadline : String(value.deadline), 
           desc : value.desc, 
           reminder : value.reminder, 
-          cycle : value.cycle, 
+          cycle : value.cycle,
+            user: navigation.getParam('task_user', 'NO-ID')
         });
         this.props.navigation.navigate("Household");
     }
@@ -92,8 +94,10 @@ export default class EditTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <ScrollView style={{height: '100%'}}>
-        <Banner title="Edit Task"/>
+          <View style={{alignItems: 'center', justifyContent: 'center', paddingTop:10, paddingBottom: 0, flex: 1}}>
+              <Text style={styles.box_Title2}>EDIT TASK</Text>
+          </View>
+        <ScrollView>
         <View style={[styles.box_SubContainer]}>
           <View style={[styles.box_Form]}>
             <Form ref={c => this._form = c}
@@ -104,7 +108,7 @@ export default class EditTaskScreen extends Component {
 
             <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                 onPress={this.handleSubmit_TaskSubmit}
-                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                   backgroundColor: '#6171A0' }}>
               Save Changes
             </Button>
@@ -136,9 +140,10 @@ const formStyles = {
       color: '#415180',
       borderWidth: 1,
       borderColor:'#415180',
-      borderRadius: 4,
+      borderRadius: 20,
       height: 36,
-      marginBottom: 5
+      marginBottom: 5,
+        padding: 10
     },
     error: {
       color: '#415180',
@@ -150,12 +155,14 @@ const formStyles = {
   },
   buttonText: {
     fontSize: 18,
-    color: 'white'
+    color: 'white',
+      padding: 10
   },
   button: {
     backgroundColor: '#ffd344',
     borderWidth: 1,
-    borderRadius: 8,
+      padding: 10,
+    borderRadius: 20,
     alignSelf: 'stretch',
     justifyContent: 'center'
   }
@@ -164,22 +171,22 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: 'Name:'
+            label: '  name'
         },
         desc: {
             multiline: true,
             numberOfLines: 3,
-            label: 'Description:'
+            label: '  description'
         },
         deadline: {
-            label: 'Deadline:',
+            label: '  deadline',
             mode: 'date'
         },
         reminder: {
-            label: 'Enable Reminder?'
+            label: '  enable reminder?'
         },
         cycle: {
-            label: 'Task renews...'
+            label: '  task renews...'
         }
     },
     stylesheet: formStyles,
@@ -189,23 +196,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#283350',
+    backgroundColor: '#F5F5F5',
   },
   box_SubContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#415180',
+    backgroundColor: '#F5F5F5',
   },
   box_Title: {
     flex: 1,
     marginTop: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#415180',
+    backgroundColor: '#F5F5F5',
   },
+    box_Title2: {
+        margin: 'auto',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        alignSelf: 'center',
+        fontSize: 40,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#415180',
+    },
   box_Form: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
     padding: 20,
     justifyContent: 'flex-start',
   },

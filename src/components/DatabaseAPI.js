@@ -109,10 +109,10 @@ export const createTask = ({name, desc, cycle, reminder, deadline}) => {
  * Args: taskId - ID for the task to be modified
  *       TaskObj - Object representing the task information
  */
-export const updateTask = (taskId, {name, desc, cycle, reminder, deadline}) => {
+export const updateTask = (taskId, {name, desc, cycle, reminder, deadline, user}) => {
 	const { currentUser } = firebase.auth();
 	firebase.database().ref(`/tasks/${taskId}`)
-		.set({name, desc, cycle, reminder, deadline});
+		.set({name, desc, cycle, reminder, deadline, user});
 }
 
 /**
@@ -215,11 +215,19 @@ export const getTasksUser = (task_id) => {
 	});
 }
 
+export const getHouseName = () => {
+    const { currentUser } = firebase.auth();
+    return getHouseId().once('value').then((snapshot) => {
+        const house_id = snapshot.val();
+        return firebase.database().ref(`/houses/${house_id}/name`);
+    });
+};
+
 export const getHouseId = () => {
 	const { currentUser } = firebase.auth();
 
 	return firebase.database().ref(`/users/${currentUser.uid}/house_id`);
-}
+};
 
 export const getHouseUsers = () => {
 	const { currentUser } = firebase.auth();

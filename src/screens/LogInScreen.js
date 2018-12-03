@@ -35,7 +35,6 @@ export default class WelcomeScreen extends Component {
      */
     handleSubmit_LogIn = () => {
         const value = this._form.getValue();
-        //const { currentUser } = firebase.auth();
 
         // If password and email match database, log in.
         if (value) {
@@ -89,7 +88,7 @@ export default class WelcomeScreen extends Component {
      * render()
      * Layout for the sign up screen.
      * WARNING! Image path may need to be updated depending on directory hierarchy.
-     * @returns {Layout}
+     * @returns {Layout}x
      */
     render() {
         return (
@@ -97,7 +96,7 @@ export default class WelcomeScreen extends Component {
                 <View style = {styles.container}>
                     <View style={[styles.box_Logo]}>
                         <Image style={{flex:1, height:undefined, width:undefined}}
-                               source={require("../assets/HouseMatesPNGLogo_dirtySlogan_ovalBackground.png")}
+                               source={require("../assets/HouseMates_Logo_Circle.png")}
                                resizeMode="contain"/>
                     </View>
                     <View style={[styles.box_Form]}>
@@ -117,14 +116,6 @@ export default class WelcomeScreen extends Component {
                                 containerStyle={{ padding: 8, height: 38, overflow: 'hidden', borderRadius: 20,
                                     backgroundColor: 'transparent' }}>
                             FORGOT PASSWORD
-                        </Button>
-                    </View>
-                    <View style={{paddingBottom: 0}}>
-                        <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                                onPress={this.handleSubmit_SignUp}
-                                containerStyle={{ padding: 14, height: 55, overflow: 'hidden',
-                                    backgroundColor: '#415180' }}>
-                            NO ACCOUNT? SIGN UP!
                         </Button>
                     </View>
                 </View>
@@ -184,10 +175,10 @@ const options = {
     auto: 'none',
     fields: {
         e_mail: {
-            placeholder: '   email'
+            placeholder: '  email'
         },
         password: {
-            placeholder: '   password:',
+            placeholder: '  password:',
             secureTextEntry: true
         },
     },
@@ -212,7 +203,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
         padding: 20,
         justifyContent: 'flex-end',
-
+        paddingBottom: '20%'
     },
     text_Welcome: {
         color: '#ffd344',

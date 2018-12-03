@@ -52,12 +52,13 @@ export default class CardComponent extends Component {
         return (
             <Card>
                 <CardItem bordered button onPress={ ()=>{ this.props.navigation.navigate('EditTask', {
-                        name: this.state.task_user,
+                        name: this.state.name,
                         desc: this.state.desc,
                         cycle: this.state.cycle,
                         reminder: this.state.reminder,
                         deadline: this.state.deadline,
                         task_id: this.state.task_id,
+                        task_user: this.state.task_user
                     }) 
                 }}>
                     <Left>

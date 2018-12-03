@@ -4,15 +4,13 @@ import {Container, Content, Icon} from "native-base";
 import Button from 'react-native-button';
 import {
     getHouseTasks,
-    assignTask,
-    getUserTasks,
-    reassignAllTasks,
-    deleteTask,
-    getTasksUser,
+    getHouseId,
     getHouseUsers // TEMP
 } from '../components/DatabaseAPI';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from "../components/HouseholdCardComponent";
+import Banner from "../components/Banner";
+import firebase from 'firebase';
 
 /**
  * class HouseholdScreen
@@ -35,7 +33,8 @@ export default class HouseholdScreen extends React.Component {
             firstQuery: '',
             tasks: [],
             refreshing: false,
-            users: [{}]
+            users: [{}],
+            houseName: ''
         }
     }
 
@@ -62,6 +61,14 @@ export default class HouseholdScreen extends React.Component {
         getHouseUsers()
             .then( function(results) { this.setState({users : results}); }.bind(this))
             .catch(e => alert(e));
+
+        getHouseId().once('value').then((snapshot) => {
+            const house_id = snapshot.val();
+            firebase.database().ref(`/houses/${house_id}/name`).once('value').then((snapshot) => {
+                    this.setState({ houseName  : snapshot.val() } ); }
+                );
+        });
+
     }
 
 
@@ -73,7 +80,7 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-
+                <Banner title={this.state.houseName}/>
                 <FlatList
                     data={this.state.tasks}
                     extraData={this.state.tasks} 

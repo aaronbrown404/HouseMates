@@ -68,16 +68,7 @@ export default class ForgotPasswordScreen extends Component {
                               type={User}
                               value={this.state.value}
                               onChange={this.onChange}
-                              options={{
-                                  fields: {
-                                      e_mail: {
-                                          autoCapitalize: 'none',
-                                          keyboardType: 'email-address',
-                                          error: 'Invalid email',
-                                          returnKeyType: 'next'
-                                      }
-                                  }
-                              }}/>
+                              options={options}/>
                         <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                 onPress={this.handleSubmit_ForgotPassword} // I had handleSubmit_ForgotPassword() had to remove ()
                                 containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
@@ -112,9 +103,10 @@ const formStyles = {
             color: '#415180',
             borderWidth: 1,
             borderColor:'#415180',
-            borderRadius: 4,
+            borderRadius: 20,
             height: 36,
-            marginBottom: 5
+            marginBottom: 5,
+            padding: 10
         },
         error: {
             color: '#415180',
@@ -131,7 +123,7 @@ const formStyles = {
     button: {
         backgroundColor: '#ffd344',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 20,
         alignSelf: 'stretch',
         justifyContent: 'center'
     }
@@ -139,9 +131,14 @@ const formStyles = {
 
 // The following edits the fields of the form. This format is required for the API.
 const options = {
+    auto: 'none',
     fields: {
         e_mail: {
-            label: 'E-mail:'
+            placeholder: '  e-mail',
+            autoCapitalize: 'none',
+            keyboardType: 'email-address',
+            error: 'Invalid email',
+            returnKeyType: 'next'
         }
     },
     stylesheet: formStyles,
@@ -184,5 +181,5 @@ const styles = StyleSheet.create({
     text_SubTitle: {
         color: '#415180',
         fontSize: 16
-    },
+    }
 });

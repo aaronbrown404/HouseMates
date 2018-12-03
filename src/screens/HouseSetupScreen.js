@@ -100,7 +100,7 @@ export default class HouseSetupScreen extends Component {
 
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                             onPress={this.joinHome}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                 backgroundColor: '#283350'}}>
                         JOIN EXISTING HOUSEHOLD
                     </Button>
@@ -114,7 +114,7 @@ export default class HouseSetupScreen extends Component {
 
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                             onPress={this.createHome.bind(this)}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                 backgroundColor: '#283350' }}>
                         CREATE NEW HOUSEHOLD
                     </Button>
@@ -142,7 +142,8 @@ const formStyles = {
             color: 'black',
             borderWidth: 1,
             borderColor:'#283350',
-            borderRadius: 4,
+            borderRadius: 20,
+            padding: 10,
             height: 36,
             marginBottom: 5
         },

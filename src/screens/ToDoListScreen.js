@@ -50,7 +50,7 @@ export default class ToDoListScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <Banner title="My Tasks"/>
+                <Banner title="MY TASKS"/>
                 <FlatList
                     data={this.state.tasks}
                     renderItem={ ({item}) =>

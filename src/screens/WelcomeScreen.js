@@ -45,13 +45,13 @@ export default class WelcomeScreen extends Component {
         return (
             <ImageBackground style={{flex: 1, height: '100%', resizeMode}}
                              source={require("../assets/bg1.png")}>
-                <View style={styles.logoContainer}>
+                <View style={styles.logoContainerStyle}>
                     <Image style={styles.logoStyle}
                            source={require("../assets/HouseMates_Icon_03.png")}
                            resizeMode="contain"/>
                 </View>
 
-                <View style={{flex: 4}}>
+                <View style={{flex: 3}}>
                     <View style={styles.box_Form01}>
                         <Button style={styles.buttonStyle}
                                 onPress={this.onLoginSubmit}
@@ -59,7 +59,6 @@ export default class WelcomeScreen extends Component {
                             LOG IN
                         </Button>
                     </View>
-
                     <View style={[styles.box_Form02]}>
                         <Button style={styles.buttonStyle} 
                                 onPress={this.onSignUpSubmit} 
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     },
     logoContainerStyle: {
         flex: 4,
-        marginTop: 60,
+        marginTop: 10,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -92,8 +91,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center', 
-        height: '55%', 
-        width: '55%', 
+        height: '70%',
+        width: '70%',
         resizeMode:'contain',
         backgroundColor: 'white',
         marginLeft: 'auto',
@@ -101,30 +100,30 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     box_Form01: {
-        flex: 6,
+        flex: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10
+        paddingBottom: 0
     },
     box_Form02: {
-        flex: 4,
+        flex: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 10,
+        padding: 0,
         marginBottom: '55%'
     },
     buttonContainerStyle: {
-        padding: 16, 
-        height: 50, 
+        padding: 12,
+        height: 40,
         width: 260, 
         overflow: 'hidden', 
         borderRadius: 20,
         backgroundColor: '#cccccc'
     },
     buttonStyle: {
-        fontSize: 16, 
+        fontSize: 14,
         color: 'white', 
         alignSelf: 'center',
         justifyContent: 'center',

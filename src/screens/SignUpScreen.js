@@ -126,7 +126,8 @@ const formStyles = {
             borderColor:'#415180',
             borderRadius: 20,
             height: 36,
-            marginBottom: 5
+            marginBottom: 5,
+            padding: 10
         },
         error: {
             color: '#415180',
@@ -153,20 +154,20 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: '   Name:'
+            label: '  Name:'
         },
         phoneNumber: {
-            label: '   Phone Number:'
+            label: '  Phone Number:'
         },
         e_mail: {
-            label: '   Email:'
+            label: '  Email:'
         },
         password: {
-            label: '   Password:',
+            label: '  Password:',
             secureTextEntry: true
         },
         verify_password: {
-            label: '   Verify Password:',
+            label: '  Verify Password:',
             secureTextEntry: true
         }
     },

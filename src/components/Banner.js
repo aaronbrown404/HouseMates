@@ -14,8 +14,9 @@ export default class Banner extends Component {
 
 const styles = {
 	bannerContainer: {
-		height: 100,
-		paddingTop: 20,
+		height: 70,
+		paddingTop: 12,
+		paddingBottom: 10,
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
