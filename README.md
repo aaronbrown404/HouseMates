@@ -1,4 +1,4 @@
-<img src="./src/assets/HouseMatesPNGLogo_long.png"
+<img src="./src/assets/HouseMates_Logo_Circle_01.png"
      alt="Logo"
      style= "margin: 10px auto 20px; display: block;"     
 />
