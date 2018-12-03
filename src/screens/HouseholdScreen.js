@@ -88,7 +88,7 @@ export default class HouseholdScreen extends React.Component {
                             task_user = {item.user}
                             updateTaskList = {this.updateHouseTasks.bind(this)}
                             navigation={this.props.navigation}
-                            imageSource={1}
+                            imageSource={3}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}

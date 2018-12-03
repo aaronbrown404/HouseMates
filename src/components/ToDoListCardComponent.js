@@ -102,7 +102,7 @@ export default class CardComponent extends Component {
                         </View>
                     </Left>
                 </CardItem>
-                <CardItem style={this.buttonColor} footer button onPress={this.onButtonPress.bind(this)}>
+                <CardItem style={this.state.buttonColor} footer button onPress={this.onButtonPress.bind(this)}>
                     <Body>
                     <Text style={styles.text_Button}>{this.state.textValue}</Text>
                     </Body>

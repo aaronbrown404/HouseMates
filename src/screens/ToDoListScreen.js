@@ -4,6 +4,7 @@ import { Container, Content, Icon} from 'native-base';
 import {getHouseUsers, getUserTasks} from "../components/DatabaseAPI";
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from '../components/ToDoListCardComponent';
+import Banner from '../components/Banner';
 
 /**
  * class ToDoListScreen
@@ -24,6 +25,16 @@ export default class ToDoListScreen extends React.Component {
         getUserTasks()
             .then( function(results) { 
                 this.setState({ tasks: [] }); 
+
+                function compare(a,b) {
+                  if (a.complete < b.complete)
+                    return -1;
+                  if (a.complete > b.complete)
+                    return 1;
+                  return 0;
+                }
+                results.sort(compare);
+
                 this.setState({ tasks: results }); 
             }.bind(this))
             .catch(e => alert(e));
@@ -39,6 +50,7 @@ export default class ToDoListScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
+                <Banner title="My Tasks"/>
                 <FlatList
                     data={this.state.tasks}
                     renderItem={ ({item}) =>
