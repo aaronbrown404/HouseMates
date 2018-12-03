@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         fontSize: 14, 
+        textAlign: 'center',
         color: 'white', 
         justifyContent: 'center', 
         alignSelf: 'center'
