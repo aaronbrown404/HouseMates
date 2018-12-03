@@ -8,6 +8,7 @@ import {
   createTask,
   updateTask
 } from '../components/DatabaseAPI';
+import Banner from '../components/Banner';
 
 //Variable for cycle lengths.
 var Cycle = tForm.enums({
@@ -42,10 +43,11 @@ export default class EditTaskScreen extends Component {
     let name = navigation.getParam('name', 'NO-ID');
     let desc = navigation.getParam('desc', 'NO-ID');
     let cycle = navigation.getParam('cycle', 'NO-ID');
+    let deadline = new Date(navigation.getParam('deadline', 'NO-ID'));
     let reminder = navigation.getParam('reminder', 'NO-ID');
     let task_id = navigation.getParam('task_id', 'NO-ID');
     this.setState({task_id : task_id});
-    let initState = {name, desc, cycle, reminder}
+    let initState = {name, desc, cycle, reminder, deadline}
 
 
     this.setState({value : initState})
@@ -90,10 +92,8 @@ export default class EditTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <ScrollView>
-        <View>
-          <Text>Edit Task</Text>
-        </View>
+        <ScrollView style={{height: '100%'}}>
+        <Banner title="Edit Task"/>
         <View style={[styles.box_SubContainer]}>
           <View style={[styles.box_Form]}>
             <Form ref={c => this._form = c}
@@ -190,18 +190,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#283350',
-    paddingLeft: 16,
-    paddingRight: 16,
-    // This field can be changed to adjust style.
-    paddingTop: 40,
   },
   box_SubContainer: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#415180',
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10
   },
   box_Title: {
     flex: 1,

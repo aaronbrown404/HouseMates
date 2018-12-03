@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     // This field can be changed to adjust style.
-    paddingTop: 40,
+    paddingTop: 40
   },
   box_SubContainer: {
     flex: 1,
