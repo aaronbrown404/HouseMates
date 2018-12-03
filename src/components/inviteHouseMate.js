@@ -1,29 +1,14 @@
-import React, { Component } from "react";
-//import { StyleSheet, Button, View } from 'react-native';
+import React from "react";
 import email from 'react-native-email';
-import { getHouseId } from './DatabaseAPI';
 
-export default class inviteHouseMate extends Component {
-
-    static houseCode = getHouseId;
-
-    static handleEmail = () => {
-        const to = []; // string or array of email addresses
-        email(to, {
-            // Optional additional arguments
-            //cc: ['bazzy@moo.com', 'doooo@daaa.com'], // string or array of email addresses
-            //bcc: 'mee@mee.com', // string or array of email addresses
-            subject: 'Join HouseMates!',
-            body: 'Download HouseMates and join my household with code:  + {this.houseCode}'
-        }).catch(console.error);
-    };
-}
-
-/*const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});*/
+export const handleEmail = (houseCode, e_mail) => {
+    //const to = this.state.email;
+    const code = houseCode;
+    const to = e_mail;
+    //const to = ['elfikyamr1@gmail.com'];
+    email(to, {
+        subject: 'Join HouseMates!',
+        body: 'Hello!\n\nDownload HouseMates and join my household with code: ' + `${code}`
+            + '.\n\n HouseMates Team'
+    }).catch(console.error);
+};

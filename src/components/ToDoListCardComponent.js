@@ -64,7 +64,7 @@ export default class CardComponent extends Component {
             this.setState({
                 textValue: 'TASK COMPLETED',
                 clicked: true
-            })
+            });
             setTaskCompleted(this.state.task_id, true).then(() => {
                 this.setState({complete : true});
                 this.setState( {buttonColor : { backgroundColor: '#018E42' } });

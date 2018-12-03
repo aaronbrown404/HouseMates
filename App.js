@@ -1,3 +1,5 @@
+import Firebase from "./src/components/Firebase";
+
 global.Symbol = require('core-js/es6/symbol');
 require('core-js/fn/symbol/iterator');
 require('core-js/fn/map');
@@ -134,7 +136,7 @@ export default class App extends React.Component {
         try {
             Firebase.init();
         } catch (error) {
-            //do nothing -> incase multiple init calls
+            //do nothing -> multiple init calls
         }
     }
 

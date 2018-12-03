@@ -35,7 +35,7 @@ export default class WelcomeScreen extends Component {
      */
     handleSubmit_LogIn = () => {
         const value = this._form.getValue();
-        const { currentUser } = firebase.auth();
+        //const { currentUser } = firebase.auth();
 
         // If password and email match database, log in.
         if (value) {

@@ -81,8 +81,6 @@ export default class HouseSetupScreen extends Component {
         this.setState({value});
     };
 
-    makeHouse() {
-    }
 
     /**
      * render()

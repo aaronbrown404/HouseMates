@@ -1,9 +1,9 @@
 import {Component} from "react";
-import {Modal, Text, KeyboardAvoidingView, StyleSheet, View} from "react-native";
+import {Modal, Text, KeyboardAvoidingView, StyleSheet, View, TextInput} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
-import inviteHouseMate from '../components/inviteHouseMate';
+import {handleEmail} from '../components/inviteHouseMate';
 import {
     getFirstName,
     setFirstName,
@@ -24,13 +24,16 @@ export default class OptionsScreen extends Component {
     // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
+
         this.state = {
-            house_id: '6XgYZd',
-            name: "Donkey Kong", 
-            phoneNumber: "N/A", 
+            house_id: '',
+            name: "",
+            phoneNumber: "",
+            inviteEmail: '',
             modalVisible: false
         };
         this.onChange=this.onChange.bind(this);
+        this.setModalVisible = this.setModalVisible.bind(this);
     }
 
     componentWillMount() {
@@ -67,18 +70,16 @@ export default class OptionsScreen extends Component {
         }
     };
 
+    setModalVisible() {
+        this.setState({modalVisible: true});
+        //this.onChange(visible);
+    };
 
     reassignAllTasks() {
         reassignAllTasks();
     }
-
-    handleSubmit_addMember = () => {
-        this.setState({
-            modalVisible: true
-        });
-    };
     handleSubmit_sendInvite = () => {
-        inviteHouseMate.handleEmail();
+        handleEmail(this.state.house_id, this.state.inviteEmail);
         this.setState({
             modalVisible: false
         });
@@ -106,36 +107,54 @@ export default class OptionsScreen extends Component {
                         <Text style={styles.userInfoStyle}>Name: {this.state.name}</Text>
                         <Text style={styles.userInfoStyle}>Phone: {this.state.phoneNumber}</Text>
                     </View>
-
                     <View style={[styles.box_Form]}>
-                        <Modal animationType="slide"
-                               transparent={true}
-                               visible={this.state.modalVisible}
-                               onRequestClose={()=>{alert('Invite not sent!')}}>
-                            <View style={[styles.box_Modal]}>
-                                <Text style={styles.text_SubTitle}>ENTER EMAIL: </Text>
-                                    <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                                            onPress={this.handleSubmit_sendInvite}
-                                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                            backgroundColor: '#729b79' }}>
-                                        INVITE TO HOUSEHOLD
-                                    </Button>
-                            </View>
-                        </Modal>
-
                         <Form ref={c => this._form = c}
                               type={User}
                               value={this.state.value}
                               onChange={this.onChange}
                               options={options}/>
                         <View style={{margin: 10}}>
-                        <Button style={styles.buttonStyle}
-                                onPress={this.handleSubmit_saveInfo}
-                                containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4, backgroundColor: '#415180' }}>
-                            SAVE
-                        </Button>
+                            <Button style={styles.buttonStyle}
+                                    onPress={this.handleSubmit_saveInfo}
+                                    containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20, backgroundColor: '#415180' }}>
+                                SAVE
+                            </Button>
                         </View>
-
+                        <View style={{padding: 10}}>
+                            <Modal animationType="slide"
+                                   transparent={false}
+                                   visible={this.state.modalVisible}
+                                   onRequestClose={()=>{alert('Invite not sent!')}}>
+                                <View style={styles.box_ContainerModal}>
+                                    <View style={styles.box_Modal}>
+                                        <View style={{justifyContent: 'flex-end',}}>
+                                            <TextInput style={{ height: 40, padding:5, borderColor: 'gray', borderWidth: 1, fontSize: 14, borderRadius: 20,}}
+                                                       value={this.state.inviteEmail}
+                                                       placeholder=' email'
+                                                       placeholderTextColor='grey'
+                                                       onChangeText={(text) => this.setState({inviteEmail: text})} />
+                                        </View>
+                                        <View style={{ paddingTop: 10, justifyContent: 'flex-end' }}>
+                                            <Button style={{
+                                                        fontSize: 14,
+                                                        color: 'white',
+                                                        justifyContent: 'center',
+                                                        alignSelf: 'center'
+                                                    }}
+                                                    onPress={this.handleSubmit_sendInvite}
+                                                    containerStyle={styles.buttonContainerStyleInvite}>
+                                                INVITE
+                                            </Button>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Modal>
+                            <Button style={styles.buttonStyle}
+                                    onPress={this.setModalVisible}
+                                    containerStyle={styles.buttonContainerStyleInvite}>
+                                INVITE A HOUSEMATE
+                            </Button>
+                        </View>
                         <View style={{padding: 10}}>
                             <Button style={styles.buttonStyle}
                                     onPress={this.reassignAllTasks}
@@ -143,13 +162,12 @@ export default class OptionsScreen extends Component {
                                 RESET AND REASSIGN ALL TASKS
                             </Button>
                         </View>
-
                         <View style={{margin: 10}}>
-                        <Button style={styles.buttonStyle}
-                                onPress={this.handleSubmit_leaveHouse}
-                                containerStyle={styles.buttonContainerStyle}>
-                            LEAVE YOUR HOUSEHOLD
-                        </Button>
+                            <Button style={styles.buttonStyle}
+                                    onPress={this.handleSubmit_leaveHouse}
+                                    containerStyle={styles.buttonContainerStyle}>
+                                LEAVE YOUR HOUSEHOLD
+                            </Button>
                         </View>
                     </View>
                 </View>
@@ -178,7 +196,7 @@ const formStyles = {
             color: '#415180',
             borderWidth: 1,
             borderColor:'#415180',
-            borderRadius: 4,
+            borderRadius: 20,
             height: 36,
             marginBottom: 5
         },
@@ -197,7 +215,7 @@ const formStyles = {
     button: {
         backgroundColor: '#ffd344',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 20,
         alignSelf: 'stretch',
         justifyContent: 'center'
     }
@@ -206,10 +224,10 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: 'Update Name:'
+            label: '   Update Name:'
         },
         phoneNumber: {
-            label: 'Update Phone Number:'
+            label: '   Update Phone Number:'
         }
     },
     stylesheet: formStyles,
@@ -219,7 +237,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#283350',
+        backgroundColor: '#F5F5F5',
         // This field can be changed to adjust style.
         paddingTop: 0,
     },
@@ -235,7 +253,12 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 10,
         flexDirection: 'column',
-        backgroundColor: 'white',
+        backgroundColor: '#F5F5F5',
+    },
+    box_ContainerModal: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#F5F5F5'
     },
     box_Title: {
         paddingTop: 30,
@@ -256,9 +279,8 @@ const styles = StyleSheet.create({
     },
     box_Modal: {
         flex: 1,
-        backgroundColor: 'white',
+        justifyContent: 'center',
         padding: 20,
-        justifyContent: 'space-evenly'
     },
     text_Title: {
         fontWeight: 'bold',
@@ -284,8 +306,15 @@ const styles = StyleSheet.create({
         padding: 11, 
         height: 45, 
         overflow: 'hidden', 
-        borderRadius: 4, 
-        backgroundColor: 'red', 
+        borderRadius: 20,
+        backgroundColor: '#c31c1c',
+    },
+    buttonContainerStyleInvite: {
+        padding: 11,
+        height: 45,
+        overflow: 'hidden',
+        borderRadius: 20,
+        backgroundColor: '#729b79',
     }
 });
 

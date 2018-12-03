@@ -57,9 +57,8 @@ export default class SignUpScreen extends Component {
                     setFirstName(value.name);
                     // Set last name
                     setLastName(value.name);
-                    // Set has-hosue to false
+                    // Set has-house to false
                     setHasHouse(false);
-
                     this.props.navigation.navigate("HouseSetup"); 
                 })
                 .catch((err) => { alert(err)});
@@ -91,14 +90,12 @@ export default class SignUpScreen extends Component {
                                   value={this.state.value}
                                   onChange={this.onChange}
                                   options={options}/>
-                            <ImageUpload />
                             <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                                     onPress={this.handleSubmit_SignUp}
-                                    containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                                    containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                         backgroundColor: '#415180' }}>
                                 SIGN UP
                             </Button>
-
                         </View>
                     </View>
             </KeyboardAvoidingView>
@@ -127,7 +124,7 @@ const formStyles = {
             color: '#415180',
             borderWidth: 1,
             borderColor:'#415180',
-            borderRadius: 4,
+            borderRadius: 20,
             height: 36,
             marginBottom: 5
         },
@@ -146,7 +143,7 @@ const formStyles = {
     button: {
         backgroundColor: '#ffd344',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 20,
         alignSelf: 'stretch',
         justifyContent: 'center'
     }
@@ -156,20 +153,20 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: 'Name:'
+            label: '   Name:'
         },
         phoneNumber: {
-            label: 'Phone Number:'
+            label: '   Phone Number:'
         },
         e_mail: {
-            label: 'Email:'
+            label: '   Email:'
         },
         password: {
-            label: 'Password:',
+            label: '   Password:',
             secureTextEntry: true
         },
         verify_password: {
-            label: 'Verify Password:',
+            label: '   Verify Password:',
             secureTextEntry: true
         }
     },
