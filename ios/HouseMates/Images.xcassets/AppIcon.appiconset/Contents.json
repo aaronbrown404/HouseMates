@@ -13,6 +13,7 @@
       "scale" : "3x"
     },
     {
+      "idiom" : "iphone",
       "size" : "29x29",
       "idiom" : "iphone",
       "filename" : "29pt_2x.png",
