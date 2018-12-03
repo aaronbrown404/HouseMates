@@ -6,9 +6,16 @@ import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
 import firebase from 'firebase';
 
+import {
+    generateID
+} from '../components/AlgorithmAPI';
 import { 
     joinCreateHouse,
-    setHouseName
+    setHouseName,
+    createHouse,
+    joinHouse,
+    idExists,
+    getHasHouse
 } from '../components/DatabaseAPI';
 
 const Form = tForm.form.Form;
@@ -25,29 +32,55 @@ export default class HouseSetupScreen extends Component {
         this.onChange=this.onChange.bind(this);
     }
 
+    componentWillMount() {
+        // If user already has house, leave this page
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`users/${currentUser.uid}/has_house`).on('value', (snapshot) => {
+            if (snapshot.val()) {
+                this.props.navigation.navigate("TabNavigation");
+            }
+        });
+    }
+
     // Rids the sign up screen of the navigation bar that comes standard with 'react-navigation'.
     static navigationOptions = {
         header: null
     };
 
     createHome = () => {
-        const value = this._form.getValue();
+        var value = this._form.getValue();
+
+        // Check form correctness
         if (value.newCode) {
-            joinCreateHouse(value.newCode);
-            this.props.navigation.navigate("TabNavigation");
+            // Generate Unique house ID
+            var houseID = generateID();
+            var foundID = false;
+            //while (idExists(houseID)) { houseID = generateID(); }
+
+            // Create house
+            var houseName = value.newCode;
+            createHouse(houseID, houseName).then(() => { this.props.navigation.navigate("TabNavigation"); });
         }
     };
+
     joinHome = () => {
         const value = this._form.getValue(); 
         if (value.joinCode) {
-            joinCreateHouse(value.joinCode);
-            this.props.navigation.navigate("TabNavigation");
+            var houseID = value.joinCode;
+
+            idExists(houseID).then((exists) => {
+                if(exists) {
+                    joinHouse(value.joinCode);
+                    this.props.navigation.navigate("TabNavigation");
+                }
+            })
         }
     };
 
     onChange(value) {
         this.setState({value});
     };
+
 
     /**
      * render()
@@ -67,7 +100,7 @@ export default class HouseSetupScreen extends Component {
 
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
                             onPress={this.joinHome}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                 backgroundColor: '#283350'}}>
                         JOIN EXISTING HOUSEHOLD
                     </Button>
@@ -80,8 +113,8 @@ export default class HouseSetupScreen extends Component {
                           options={optionsC}/>
 
                     <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.createHome}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
+                            onPress={this.createHome.bind(this)}
+                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                                 backgroundColor: '#283350' }}>
                         CREATE NEW HOUSEHOLD
                     </Button>
@@ -109,7 +142,8 @@ const formStyles = {
             color: 'black',
             borderWidth: 1,
             borderColor:'#283350',
-            borderRadius: 4,
+            borderRadius: 20,
+            padding: 10,
             height: 36,
             marginBottom: 5
         },

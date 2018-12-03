@@ -4,6 +4,7 @@ import { Container, Content, Icon} from 'native-base';
 import {getHouseUsers, getUserTasks} from "../components/DatabaseAPI";
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from '../components/ToDoListCardComponent';
+import Banner from '../components/Banner';
 
 /**
  * class ToDoListScreen
@@ -22,7 +23,20 @@ export default class ToDoListScreen extends React.Component {
 
     componentWillMount() {
         getUserTasks()
-            .then( function(results) { this.setState({tasks: results}); }.bind(this))
+            .then( function(results) { 
+                this.setState({ tasks: [] }); 
+
+                function compare(a,b) {
+                  if (a.complete < b.complete)
+                    return -1;
+                  if (a.complete > b.complete)
+                    return 1;
+                  return 0;
+                }
+                results.sort(compare);
+
+                this.setState({ tasks: results }); 
+            }.bind(this))
             .catch(e => alert(e));
     }
 
@@ -36,6 +50,7 @@ export default class ToDoListScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
+                <Banner title="MY TASKS"/>
                 <FlatList
                     data={this.state.tasks}
                     renderItem={ ({item}) =>
@@ -45,6 +60,9 @@ export default class ToDoListScreen extends React.Component {
                             cycle={item.cycle}
                             reminder={item.reminder}
                             deadline={item.deadline}
+                            task_id = {item.task_id}
+                            task_user = {item.user}
+                            complete = {item.complete}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}
@@ -59,7 +77,7 @@ export default class ToDoListScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: '#415180'
+        backgroundColor: '#F5F5F5'
     }
 });
 

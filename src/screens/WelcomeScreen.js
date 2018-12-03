@@ -2,7 +2,7 @@ import {Component} from "react";
 import { Image, ImageBackground, StyleSheet, View} from "react-native";
 import Button from 'react-native-button';
 import React from "react";
-
+import { idExists } from '../components/DatabaseAPI';
 
 export default class WelcomeScreen extends Component {
     // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
@@ -20,7 +20,7 @@ export default class WelcomeScreen extends Component {
      * When the "LOG IN" button is pressed, this function is called.
      * It simply proceeds to the log in screen.
      */
-    handleSubmit_LogIn = () => {
+    onLoginSubmit = () => {
         this.props.navigation.navigate("LogIn");
     };
 
@@ -29,7 +29,7 @@ export default class WelcomeScreen extends Component {
      * When the "Sign Up" button is pressed, this function is called.
      * It simply proceeds to the sign up screen.
      */
-    handleSubmit_SignUp = () => {
+    onSignUpSubmit = () => {
         this.props.navigation.navigate("SignUp")
     };
 
@@ -43,27 +43,26 @@ export default class WelcomeScreen extends Component {
     render() {
         const resizeMode = 'cover';
         return (
-            <ImageBackground style={{flex: 1, resizeMode}}
-                             source={require("../assets/back.png")}>
-                <View style={[styles.box_Logo]}>
-                    <Image style={{flex:1, height:undefined, width:undefined}}
-                           source={require("../assets/HouseMatesPNGLogo_dirtySlogan_ovalBackground.png")}
+            <ImageBackground style={{flex: 1, height: '100%', resizeMode}}
+                             source={require("../assets/bg1.png")}>
+                <View style={styles.logoContainerStyle}>
+                    <Image style={styles.logoStyle}
+                           source={require("../assets/HouseMates_Icon_03.png")}
                            resizeMode="contain"/>
                 </View>
-                <View style={{flex: 4}}>
-                    <View style={[styles.box_Form01]}>
-                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
-                                onPress={this.handleSubmit_LogIn}
-                                containerStyle={{ padding: 16, height: 50, width: 260, overflow: 'hidden', borderRadius: 20,
-                                    backgroundColor: '#283350' }}>
+
+                <View style={{flex: 3}}>
+                    <View style={styles.box_Form01}>
+                        <Button style={styles.buttonStyle}
+                                onPress={this.onLoginSubmit}
+                                containerStyle={styles.buttonContainerStyle}>
                             LOG IN
                         </Button>
                     </View>
                     <View style={[styles.box_Form02]}>
-                        <Button style={{fontSize: 14, color: 'white', alignSelf: 'center', justifyContent: 'center'}}
-                                onPress={this.handleSubmit_SignUp}
-                                containerStyle={{ padding: 16, height: 50, width: 260, overflow: 'hidden', borderRadius: 20,
-                                    backgroundColor: '#283350' }}>
+                        <Button style={styles.buttonStyle} 
+                                onPress={this.onSignUpSubmit} 
+                                containerStyle={styles.buttonContainerStyle}>
                             SIGN UP
                         </Button>
                     </View>
@@ -80,32 +79,53 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: '#283350'
     },
-    box_Logo: {
+    logoContainerStyle: {
         flex: 4,
-        marginTop: 60,
-        justifyContent: 'flex-end',
-        backgroundColor: 'transparent'
-
+        marginTop: 10,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
+    logoStyle: {  
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center', 
+        height: '70%',
+        width: '70%',
+        resizeMode:'contain',
+        backgroundColor: 'white',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: '10%'
     },
     box_Form01: {
-        flex: 6,
+        flex: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: 10
-
+        justifyContent: 'center',
+        paddingBottom: 0
     },
     box_Form02: {
-        flex: 4,
+        flex: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 10
+        padding: 0,
+        marginBottom: '55%'
     },
-    text_Welcome: {
-        color: '#ffd344',
-        fontSize: 25,
-        letterSpacing: 4,
-        alignSelf: 'center'
+    buttonContainerStyle: {
+        padding: 12,
+        height: 40,
+        width: 260, 
+        overflow: 'hidden', 
+        borderRadius: 20,
+        backgroundColor: '#cccccc'
     },
+    buttonStyle: {
+        fontSize: 14,
+        color: 'white', 
+        alignSelf: 'center',
+        justifyContent: 'center',
+    }
 });

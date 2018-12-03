@@ -27,7 +27,9 @@ export default class CardComponent extends Component {
             cycle: this.props.cycle,
             reminder: this.props.reminder,
             deadline: this.props.deadline,
-            imageSource: this.props.imageSource
+            imageSource: this.props.imageSource,
+            task_id: this.props.task_id,
+            task_user: this.props.task_user
         };
     }
 
@@ -49,12 +51,21 @@ export default class CardComponent extends Component {
 
         return (
             <Card>
-                <CardItem bordered button onPress={()=>alert("Edit Task!")}>
+                <CardItem bordered button onPress={ ()=>{ this.props.navigation.navigate('EditTask', {
+                        name: this.state.name,
+                        desc: this.state.desc,
+                        cycle: this.state.cycle,
+                        reminder: this.state.reminder,
+                        deadline: this.state.deadline,
+                        task_id: this.state.task_id,
+                        task_user: this.state.task_user
+                    }) 
+                }}>
                     <Left>
                         <View style={{flexDirection: 'column', justifyContent: 'flex-start'}}>
                             <Thumbnail source={images[this.state.imageSource]}/>
                             <Text style={{alignSelf: 'center'}}>
-                                {this.state.user}
+                                {this.state.task_user}
                             </Text>
                         </View>
                         <View style={{paddingLeft: 5}}>
@@ -67,7 +78,7 @@ export default class CardComponent extends Component {
                     </Left>
                     <Right>
                         <View style={{flexDirection: 'column'}}>
-                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>alert("Task Deleted!")}>
+                            <Button style={{backgroundColor: '#415180', marginBottom: 5}} onPress={()=>{deleteTask(this.state.task_id); this.props.updateTaskList(); alert("Task Deleted!");}}>
                                 <Icon name='ios-trash' style={{color: 'white'}}/>
                             </Button>
                             <Button style={{backgroundColor: '#415180'}} onPress={()=>alert("Reminder Sent!")}>

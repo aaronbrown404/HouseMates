@@ -4,13 +4,13 @@ import {Container, Content, Icon} from "native-base";
 import Button from 'react-native-button';
 import {
     getHouseTasks,
-    assignTask,
-    getUserTasks,
-    reassignAllTasks,
+    getHouseId,
     getHouseUsers // TEMP
 } from '../components/DatabaseAPI';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import CardComponent from "../components/HouseholdCardComponent";
+import Banner from "../components/Banner";
+import firebase from 'firebase';
 
 /**
  * class HouseholdScreen
@@ -33,30 +33,42 @@ export default class HouseholdScreen extends React.Component {
             firstQuery: '',
             tasks: [],
             refreshing: false,
-            users: [{}]
+            users: [{}],
+            houseName: ''
         }
     }
 
-    /* Updates the state tasks to be the lsit of tasks */
+    /* Updates the state tasks to be the list of tasks */
     updateHouseTasks() {
         this.setState({refreshing: true})
         getHouseTasks().then( function(results) {
+            this.setState({tasks : [] });
             this.setState({tasks : results});
-            this.setState({refreshing : false})
+            this.setState({refreshing : false});
+            console.log("Updating Tasks");
+            console.log(this.state);
         }.bind(this));
     }
 
-    reassignAllTasks() {
-        reassignAllTasks();
-    }
 
     /* Prior to rendering set up initial page */
     componentWillMount() {
         this.updateHouseTasks();
-
+        console.log("Getting  tasks user");
+        // getTasksUser("-LSilf0GmlxrggukBcJ3").then((result) => {
+        //     console.log(result);
+        // });
         getHouseUsers()
             .then( function(results) { this.setState({users : results}); }.bind(this))
             .catch(e => alert(e));
+
+        getHouseId().once('value').then((snapshot) => {
+            const house_id = snapshot.val();
+            firebase.database().ref(`/houses/${house_id}/name`).once('value').then((snapshot) => {
+                    this.setState({ houseName  : snapshot.val() } ); }
+                );
+        });
+
     }
 
 
@@ -68,16 +80,10 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <View style={{padding: 10}}>
-                    <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.reassignAllTasks}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                                backgroundColor: 'red' }}>
-                        Reassign All Tasks
-                    </Button>
-                </View>
+                <Banner title={this.state.houseName}/>
                 <FlatList
                     data={this.state.tasks}
+                    extraData={this.state.tasks} 
                     renderItem={ ({item}) =>
                         <CardComponent
                             name={item.name}
@@ -86,7 +92,10 @@ export default class HouseholdScreen extends React.Component {
                             reminder={item.reminder}
                             deadline={item.deadline}
                             task_id = {item.task_id}
-                            imageSource={1}
+                            task_user = {item.user}
+                            updateTaskList = {this.updateHouseTasks.bind(this)}
+                            navigation={this.props.navigation}
+                            imageSource={3}
                         />
                     }
                     keyExtractor={(item, index) => index.toString()}

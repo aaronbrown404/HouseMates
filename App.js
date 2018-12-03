@@ -1,3 +1,5 @@
+import Firebase from "./src/components/Firebase";
+
 global.Symbol = require('core-js/es6/symbol');
 require('core-js/fn/symbol/iterator');
 require('core-js/fn/map');
@@ -16,8 +18,41 @@ import HouseSetupScreen from './src/screens/HouseSetupScreen';
 import CreateTaskScreen from './src/screens/CreateTaskScreen';
 import TabNavigation from './src/TabNavigation';
 import LogInScreen from './src/screens/LogInScreen';
-import WIPScreen from './src/screens/WIPScreen';
-import Firebase from  './src/components/Firebase';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import OptionsScreen from  './src/screens/OptionsScreen';
+import EditTaskScreen from './src/screens/EditTaskScreen';
+
+/*
+import PushNotificationIOS from 'react-native';
+//var PushNotification = require('react-native-push-notification');
+import PushNotification from 'react-native-push-notification';
+
+PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function(token) {
+        console.warn(token);
+    },
+
+    onNotification: function(notification) {
+        setTimeout(() => {
+            if(!notification['foreground']){ }
+        }, 1);
+        PushNotification.localNotificationSchedule({
+            title: 'HouseMates Reminder',
+            message: notification['name'], // (required)
+            date: new Date(Date.now()) // in 60 secs
+        });
+    },
+
+    senderID: "1062239771420",
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+}); */
 
 /**
  * Class required for top navigation bar's HouseMates Logo image.
@@ -44,6 +79,9 @@ const RootStack = createStackNavigator(
         LogIn: {
             screen: LogInScreen
         },
+        ForgotPassword: {
+            screen: ForgotPasswordScreen
+        },
         SignUp: {
             screen: SignUpScreen
         },
@@ -56,30 +94,33 @@ const RootStack = createStackNavigator(
         CreateTask: {
             screen: CreateTaskScreen
         },
-        WIP: {
-            screen: WIPScreen
+        Options: {
+            screen: OptionsScreen
+        },
+        EditTask: {
+            screen: EditTaskScreen
         }
     },
     {
         initialRouteName: 'Welcome', // Determines starting screen.
 
         //headerMode: 'screen',
-        navigationOptions: {
+        navigationOptions: ( {navigate, navigation} ) => ({
             headerTitle: <LogoTitle />,
             headerStyle: {
                 backgroundColor: '#283350',
             },
 
-            // Lacks functionality at the moment. This is the options button (three dots) at the top right
-            // of the nav bar on the ToDoListScreen.js and HouseholdScreen.js.
             headerRight:
                 <Button transparent
-                        style={{justifyContent: 'center', alignSelf: 'center'}}>
+                        style={{justifyContent: 'center', alignSelf: 'center'}}
+                        onPress={() => navigation.navigate('Options')}
+                >
                     <Icon style={{color: 'white'}}
                           name="md-more"/>
                 </Button>,
             headerTintColor: "white"
-        }
+        })
     }
 );
 
@@ -88,9 +129,15 @@ const RootStack = createStackNavigator(
  */
 export default class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
     componentWillMount() {
-        console.log('hello');
-        Firebase.init();
+        try {
+            Firebase.init();
+        } catch (error) {
+            //do nothing -> multiple init calls
+        }
     }
 
     render() {
