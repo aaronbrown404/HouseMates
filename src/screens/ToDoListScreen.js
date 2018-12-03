@@ -24,6 +24,16 @@ export default class ToDoListScreen extends React.Component {
         getUserTasks()
             .then( function(results) { 
                 this.setState({ tasks: [] }); 
+                
+                function compare(a,b) {
+                  if (a.complete < b.complete)
+                    return -1;
+                  if (a.complete > b.complete)
+                    return 1;
+                  return 0;
+                }
+                results.sort(compare);
+
                 this.setState({ tasks: results }); 
             }.bind(this))
             .catch(e => alert(e));
