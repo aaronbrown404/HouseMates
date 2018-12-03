@@ -7,6 +7,8 @@ import {
     assignTask,
     getUserTasks,
     reassignAllTasks,
+    deleteTask,
+    getTasksUser,
     getHouseUsers // TEMP
 } from '../components/DatabaseAPI';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
@@ -41,19 +43,22 @@ export default class HouseholdScreen extends React.Component {
     updateHouseTasks() {
         this.setState({refreshing: true})
         getHouseTasks().then( function(results) {
+            this.setState({tasks : [] });
             this.setState({tasks : results});
-            this.setState({refreshing : false})
+            this.setState({refreshing : false});
+            console.log("Updating Tasks");
+            console.log(this.state);
         }.bind(this));
     }
 
-    reassignAllTasks() {
-        reassignAllTasks();
-    }
 
     /* Prior to rendering set up initial page */
     componentWillMount() {
         this.updateHouseTasks();
-
+        console.log("Getting  tasks user");
+        // getTasksUser("-LSilf0GmlxrggukBcJ3").then((result) => {
+        //     console.log(result);
+        // });
         getHouseUsers()
             .then( function(results) { this.setState({users : results}); }.bind(this))
             .catch(e => alert(e));
@@ -68,16 +73,10 @@ export default class HouseholdScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <View style={{padding: 10}}>
-                    <Button style={{fontSize: 14, color: 'white', justifyContent: 'center', alignSelf: 'center'}}
-                            onPress={this.reassignAllTasks}
-                            containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
-                                                backgroundColor: 'red' }}>
-                        Reassign All Tasks
-                    </Button>
-                </View>
+
                 <FlatList
                     data={this.state.tasks}
+                    extraData={this.state.tasks} 
                     renderItem={ ({item}) =>
                         <CardComponent
                             name={item.name}
@@ -86,6 +85,9 @@ export default class HouseholdScreen extends React.Component {
                             reminder={item.reminder}
                             deadline={item.deadline}
                             task_id = {item.task_id}
+                            task_user = {item.user}
+                            updateTaskList = {this.updateHouseTasks.bind(this)}
+                            navigation={this.props.navigation}
                             imageSource={1}
                         />
                     }

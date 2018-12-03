@@ -1,11 +1,12 @@
 // This replaced CreateTaskScreen and will be prompted to show on editTask or createTask button press.
-import {Component} from "react";
+import { Component } from "react";
 import { Text, KeyboardAvoidingView, StyleSheet, View, Image, ScrollView } from "react-native";
 import Button from 'react-native-button';
 import React from "react";
 import tForm from 'tcomb-form-native';
 import { 
   createTask,
+  updateTask
 } from '../components/DatabaseAPI';
 
 //Variable for cycle lengths.
@@ -24,7 +25,7 @@ const User = tForm.struct({
   reminder: tForm.Boolean,
   cycle: Cycle,
 });
-export default class CreateTaskScreen extends Component {
+export default class EditTaskScreen extends Component {
   // Constructor initializes name, deadline, desc to "".
   constructor(props) {
     super(props);
@@ -36,6 +37,22 @@ export default class CreateTaskScreen extends Component {
     header: null
   };
 
+  componentWillMount() {
+    var { navigation } = this.props;
+    let name = navigation.getParam('name', 'NO-ID');
+    let desc = navigation.getParam('desc', 'NO-ID');
+    let cycle = navigation.getParam('cycle', 'NO-ID');
+    let reminder = navigation.getParam('reminder', 'NO-ID');
+    let task_id = navigation.getParam('task_id', 'NO-ID');
+    this.setState({task_id : task_id});
+    let initState = {name, desc, cycle, reminder}
+
+
+    this.setState({value : initState})
+    console.log(this.state);
+    console.log(initState);
+  }
+
   /**
    * handleSubmit_TaskSubmit()
    * When the "CREATE" button is pressed, this function is called.
@@ -46,8 +63,9 @@ export default class CreateTaskScreen extends Component {
   handleSubmit_TaskSubmit = () => {
     // {name, desc, cycle, reminder, deadline}
     const value = this._form.getValue();
+    console.log(value);
     if (value) {
-        createTask( {
+        updateTask(this.state.task_id, {
           name : value.name, 
           deadline : String(value.deadline), 
           desc : value.desc, 
@@ -62,9 +80,6 @@ export default class CreateTaskScreen extends Component {
     this.setState({value});
   };
 
-  go_back = () => {
-      this.props.navigation.navigate("TabNavigation");
-  };
   /**
    * render()
    * Layout for the sign up screen.
@@ -75,10 +90,10 @@ export default class CreateTaskScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Image style={{flex: 1, height:undefined, width:undefined}}
-            source={require("../assets/HouseMatesPNG_CreateTask_04.png")}
-            resizeMode="contain"/>
         <ScrollView>
+        <View>
+          <Text>Edit Task</Text>
+        </View>
         <View style={[styles.box_SubContainer]}>
           <View style={[styles.box_Form]}>
             <Form ref={c => this._form = c}
@@ -91,7 +106,7 @@ export default class CreateTaskScreen extends Component {
                 onPress={this.handleSubmit_TaskSubmit}
                 containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 4,
                   backgroundColor: '#6171A0' }}>
-              FINALIZE
+              Save Changes
             </Button>
           </View>
         </View>
