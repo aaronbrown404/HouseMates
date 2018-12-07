@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 // WARNING! Image path may need to be updated depending on directory hierarchy.
 import ToDoListScreen from './screens/ToDoListScreen';
 import HouseholdScreen from './screens/HouseholdScreen';
+import {Icon} from "native-base";
 
 /**
  * createMaterialTopTabNavigator

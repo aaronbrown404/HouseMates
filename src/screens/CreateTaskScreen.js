@@ -50,7 +50,7 @@ export default class CreateTaskScreen extends Component {
     if (value) {
         createTask( {
           name : value.name, 
-          deadline : String(value.deadline), 
+          deadline : String(value.deadline),
           desc : value.desc, 
           reminder : value.reminder, 
           cycle : value.cycle, 

@@ -9,7 +9,7 @@ require('core-js/fn/array/find');
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import { Image, View } from 'react-native';
-import { Icon, Button } from 'native-base';
+import { Button, Icon } from 'native-base';
 
 // These import paths may need to change depending on the directory hierarchy.
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -23,8 +23,9 @@ import OptionsScreen from  './src/screens/OptionsScreen';
 import EditTaskScreen from './src/screens/EditTaskScreen';
 
 /*
+THIS CODE ONLY WORKS FOR ANDROID. LEAVING FOR FUTURE IMPLEMENTATION
+
 import PushNotificationIOS from 'react-native';
-//var PushNotification = require('react-native-push-notification');
 import PushNotification from 'react-native-push-notification';
 
 PushNotification.configure({
@@ -70,6 +71,12 @@ class LogoTitle extends React.Component {
     }
 }
 
+export const signOut = (navigation) => {
+    Firebase.auth.signOut()
+        .then( () => { navigation.navigate('LogIn') })
+        .catch((error) => alert(error));
+};
+
 // Governs screen names as well as sets up the navigator. Required for screen traversal.
 const RootStack = createStackNavigator(
     {
@@ -111,13 +118,18 @@ const RootStack = createStackNavigator(
                 backgroundColor: '#283350',
             },
 
+            headerLeft:
+                <Button transparent
+                        style={{justifyContent: 'center', alignSelf: 'center'}}
+                        onPress={ () => { signOut(navigation) }}>
+                    <Icon style={{color: 'white'}} name='ios-log-out'/>
+                </Button>,
             headerRight:
                 <Button transparent
                         style={{justifyContent: 'center', alignSelf: 'center'}}
-                        onPress={() => navigation.navigate('Options')}
-                >
+                        onPress={() => navigation.navigate('Options')}>
                     <Icon style={{color: 'white'}}
-                          name="md-more"/>
+                          name="ios-menu"/>
                 </Button>,
             headerTintColor: "white"
         })
