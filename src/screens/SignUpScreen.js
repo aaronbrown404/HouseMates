@@ -6,15 +6,12 @@ import Button from 'react-native-button';
 import Firebase from "../components/Firebase";
 import { setLastName, setFirstName, setHasHouse } from '../components/DatabaseAPI';
 import firebase from 'firebase';
-import ImageUpload from "../components/ImageUpload"
-
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
 const User = tForm.struct({
     name: tForm.String,
     e_mail: tForm.String,
-    phoneNumber: tForm.maybe(tForm.String),
     password: tForm.String,
     verify_password: tForm.String
 });
@@ -23,7 +20,7 @@ export default class SignUpScreen extends Component {
     // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
     constructor(props) {
         super(props);
-        this.state = { name: "", e_mail: "", phoneNumber: "", password:  "", verify_password: "" };
+        this.state = { name: "", e_mail: "", password:  "", verify_password: "" };
         this.onChange=this.onChange.bind(this);
     }
 
@@ -42,7 +39,6 @@ export default class SignUpScreen extends Component {
 
     handleSubmit_SignUp = () => {
         const value = this._form.getValue();
-        const { currentUser } = firebase.auth();
 
         if (value.password !== value.verify_password) {
             alert('Passwords must match!');
@@ -152,22 +148,20 @@ const formStyles = {
 
 // The following edits the fields of the form. This format is required for the API.
 const options = {
+    auto: 'none',
     fields: {
         name: {
-            label: '  Name:'
-        },
-        phoneNumber: {
-            label: '  Phone Number:'
+            placeholder: '  name'
         },
         e_mail: {
-            label: '  Email:'
+            placeholder: '  email'
         },
         password: {
-            label: '  Password:',
+            placeholder: '  password',
             secureTextEntry: true
         },
         verify_password: {
-            label: '  Verify Password:',
+            placeholder: '  confirm password',
             secureTextEntry: true
         }
     },

@@ -1,6 +1,6 @@
 // Added image.
 import {Component} from "react";
-import {Image, Text, StyleSheet, View} from "react-native";
+import {Image, Text, StyleSheet, View, KeyboardAvoidingView} from "react-native";
 import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
@@ -90,7 +90,7 @@ export default class HouseSetupScreen extends Component {
      */
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}>
                 <View style={styles.box_Option1}>
                     <Form ref={c => this._form = c}
                           type={User}
@@ -119,7 +119,7 @@ export default class HouseSetupScreen extends Component {
                         CREATE NEW HOUSEHOLD
                     </Button>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }

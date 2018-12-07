@@ -10,25 +10,22 @@ import {
     leaveHouse,
     getHouseId,
     reassignAllTasks
-    // TODO GET PHONE NUMBER
 } from '../components/DatabaseAPI';
 
 // Form and User initialize the user input fields.
 const Form = tForm.form.Form;
 const User = tForm.struct({
-    name: tForm.maybe(tForm.String),
-    phoneNumber: tForm.maybe(tForm.String),
+    name: tForm.maybe(tForm.String)
 });
 
 export default class OptionsScreen extends Component {
-    // Constructor initializes name, phoneNumber, joinCode, and houseName to "".
+    // Constructor initializes name, joinCode, and houseName to "".
     constructor(props) {
         super(props);
 
         this.state = {
             house_id: '',
             name: "",
-            phoneNumber: "",
             inviteEmail: '',
             modalVisible: false
         };
@@ -62,9 +59,6 @@ export default class OptionsScreen extends Component {
             if(value.name) {
                 setFirstName(value.name);
                 console.log('name');
-            }
-            if(value.phoneNumber) {
-                console.log('modified phoneNumber');
             }
             this.props.navigation.navigate("TabNavigation");
         }
@@ -105,7 +99,6 @@ export default class OptionsScreen extends Component {
                         <Text style={styles.text_SubTitle}>House Code:</Text>
                         <Text style={styles.houseCodeStyle}>{this.state.house_id}</Text>
                         <Text style={styles.userInfoStyle}>Name: {this.state.name}</Text>
-                        <Text style={styles.userInfoStyle}>Phone: {this.state.phoneNumber}</Text>
                     </View>
                     <View style={[styles.box_Form]}>
                         <Form ref={c => this._form = c}
@@ -198,7 +191,8 @@ const formStyles = {
             borderColor:'#415180',
             borderRadius: 20,
             height: 36,
-            marginBottom: 5
+            marginBottom: 5,
+            padding:10
         },
         error: {
             color: '#415180',
@@ -227,9 +221,6 @@ const options = {
         name: {
             placeholder: '  update name'
         },
-        phoneNumber: {
-            placeholder: '  update phone number'
-        }
     },
     stylesheet: formStyles,
 };

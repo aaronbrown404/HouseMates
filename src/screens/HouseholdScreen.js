@@ -1,6 +1,6 @@
 import React from "react";
-import {StyleSheet, View, FlatList, Text} from 'react-native';
-import {Container, Content, Icon} from "native-base";
+import {StyleSheet, View, FlatList} from 'react-native';
+import {Container, Icon} from "native-base";
 import Button from 'react-native-button';
 import {
     getHouseTasks,
@@ -11,6 +11,7 @@ import {
 import CardComponent from "../components/HouseholdCardComponent";
 import Banner from "../components/Banner";
 import firebase from 'firebase';
+import { HeaderBackButton } from 'react-navigation';
 
 /**
  * class HouseholdScreen
@@ -19,11 +20,32 @@ import firebase from 'firebase';
  * HouseholdCardComponent.js
  */
 export default class HouseholdScreen extends React.Component {
-    static navigationOptions = {
+    /*static navigationOptions = {
         title: "My Household",
         tabBarIcon: ({tintColor})=>(
             <Icon name='ios-home' style={{color: tintColor}} />
-        )
+        ),
+        headerTitle: 'BACK',
+        headerLeft: (
+            <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="red"
+            />
+        ),
+    };*/
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: "My Household",
+            tabBarIcon: ({tintColor})=>(
+                <Icon name='ios-home' style={{color: tintColor}} />
+            ),
+            /*headerLeft: (
+                <HeaderBackButton onPress={
+                    ()=>{ alert('PRESSED') }
+                }/>
+            )*/
+        }
     };
 
     /* Ctor: Sets up init state for page */
