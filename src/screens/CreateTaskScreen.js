@@ -47,7 +47,8 @@ export default class CreateTaskScreen extends Component {
   handleSubmit_TaskSubmit = () => {
     // {name, desc, cycle, reminder, deadline}
     const value = this._form.getValue();
-    if (value) {
+
+    if (value && (value.deadline > Date.now())) {
         createTask( {
           name : value.name, 
           deadline : String(value.deadline),
