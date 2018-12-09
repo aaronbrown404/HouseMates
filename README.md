@@ -80,46 +80,25 @@ We have provided the following user accounts for testing purposes. Upon reaching
 ## Code Snippets
 
 ## Creating a Task with Firebase
-
 ```
 export  const  createTask  = ({name, desc, cycle, reminder, deadline}) => {
+	const { currentUser } = firebase.auth();
+	// Create the task under the field and save the ID
+	const  newTaskRef  = firebase.database().ref(`/tasks`).push( {name, desc, cycle, reminder, deadline, complete :  false} );
 
-const { currentUser } = firebase.auth();
+	// Take task id, put it house's tasks.
+	firebase.database().ref(`/users/${currentUser.uid}/house_id`)
+	.once('value').then(function(snapshot) {
+		// Get the houseID from the user making this task
+		const  house_id  = snapshot.val();
 
+		// Add the task to the house's field 'tasks' (task list)
+		firebase.database().ref(`/houses/${house_id}/tasks/${newTaskRef.key}`)
+			.set( newTaskRef.key );
 
-
-// Create the task under the field and save the ID
-
-const  newTaskRef  = firebase.database().ref(`/tasks`)
-
-.push( {name, desc, cycle, reminder, deadline, complete :  false} );
-
-
-
-// Take task id, put it house's tasks.
-
-firebase.database().ref(`/users/${currentUser.uid}/house_id`)
-
-.once('value')
-
-.then(function(snapshot) {
-
-// Get the houseID from the user making this task
-
-const  house_id  = snapshot.val();
-
-// Add the task to the house's field 'tasks' (task list)
-
-firebase.database().ref(`/houses/${house_id}/tasks/${newTaskRef.key}`)
-
-.set( newTaskRef.key );
-
-// Assign the task to a user
-
-assignTask(newTaskRef.key);
-
-});
-
+		// Assign the task to a user
+		assignTask(newTaskRef.key);
+	});
 }
 ```
 
