@@ -4,7 +4,7 @@ import React from "react";
 import tForm from 'tcomb-form-native';
 import Button from 'react-native-button';
 import Firebase from "../components/Firebase";
-import { setLastName, setFirstName, setHasHouse } from '../components/DatabaseAPI';
+import { setFirstName, setHasHouse } from '../components/DatabaseAPI';
 import firebase from 'firebase';
 
 // Form and User initialize the user input fields.
@@ -51,8 +51,6 @@ export default class SignUpScreen extends Component {
                 .then( () => { 
                     // Set First name
                     setFirstName(value.name);
-                    // Set last name
-                    setLastName(value.name);
                     // Set has-house to false
                     setHasHouse(false);
                     this.props.navigation.navigate("HouseSetup"); 
