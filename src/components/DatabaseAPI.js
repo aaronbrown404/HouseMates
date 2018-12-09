@@ -16,13 +16,6 @@ export const setFirstName = (first_name) => {
 }
 
 /* Sets the user's last name under 'last_name' field. */
-export const setLastName = (last_name) => {
-	const { currentUser } = firebase.auth();
-	firebase.database().ref(`/users/${currentUser.uid}/last_name`)
-		.set( last_name );
-}
-
-/* Sets the user's last name under 'last_name' field. */
 export const setHasHouse = (has_house) => {
 	const { currentUser } = firebase.auth();
 	return firebase.database().ref(`/users/${currentUser.uid}/has_house`).set( has_house );
@@ -191,12 +184,6 @@ export const getUserTasks = () => {
 export const getFirstName = () => {
 	const { currentUser } = firebase.auth();
 	return firebase.database().ref(`/users/${currentUser.uid}/first_name`);
-}
-
-export const getLastName = () => {
-	const { currentUser } = firebase.auth();
-
-	return firebase.database().ref(`/users/${currentUser.uid}/last_name`);
 }
 
 export const getTasksUser = (task_id) => {
@@ -394,7 +381,10 @@ export const reassignAllTasks = () => {
 							// cur_user will be 0 still when the second assign is called.
 							var p = Promise.resolve(); // Q() in q
 							task_list.forEach(task =>{
-						    	p = p.then(() => assignTask(task.task_id)); 
+						    	p = p.then(() => {
+						    		firebase.database().ref(`/tasks/${task.task_id}/complete`).set(false);
+						    		assignTask(task.task_id)
+						    	}); 
 							});
 
 						});
