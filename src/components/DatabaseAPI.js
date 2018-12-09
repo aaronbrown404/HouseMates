@@ -361,9 +361,13 @@ export const leaveHouse = () => {
 export const reassignAllTasks = () => {
 	const { currentUser } = firebase.auth();
 	getHouseUsers().then((userList) => {
+
 		const user_id_list = _.map(userList, (val, uid) => {
 			return val.user_id;
 		});
+
+		const offset = Math.floor(Math.random() * user_id_list.length);
+
 		// Delete
 		task_delete_promises = []
 		for (userId of user_id_list) {
@@ -375,16 +379,17 @@ export const reassignAllTasks = () => {
 					const house_id = snapshot.val();
 					firebase.database().ref(`/houses/${house_id}/cur_user`).once('value').then((cur_user) => {
 						firebase.database().ref(`/houses/${house_id}/cur_user`)
-						.set((cur_user.val() + 1) % user_id_list.length).then(() => {
+						.set((cur_user.val() + offset) % user_id_list.length).then(() => {
 
 							// We do this funny loop because assign runs too quickly and
 							// cur_user will be 0 still when the second assign is called.
+							for (task of task_list) {
+								firebase.database().ref(`/tasks/${task.task_id}/complete`).set(false);
+							}
+
 							var p = Promise.resolve(); // Q() in q
 							task_list.forEach(task =>{
-						    	p = p.then(() => {
-						    		firebase.database().ref(`/tasks/${task.task_id}/complete`).set(false);
-						    		assignTask(task.task_id)
-						    	}); 
+						    	p = p.then(() => assignTask(task.task_id) ); 
 							});
 
 						});
