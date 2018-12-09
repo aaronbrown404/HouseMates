@@ -2,11 +2,10 @@
 
 <img src="./src/assets/HouseMates_Logo_Circle_01.png"
      alt="Logo"
-     width="200"
-     height="200"
+     width="800"
+     height="800"
      style= "margin: 10px auto 20px; display: block; height: 100; width: 100;"     
 />
-![](https://lh5.googleusercontent.com/-BWejvDwNQs6gsbuN4nUtNUrZ_E5Mb_34bLmnDhaoQcIcBhgUmWPM0sKoqGzmKfzB0cOYRcZ-w6dhEvN1yvzDzEVGexa72-PHJpumuZRRf8-YoEpNZG0YHKycF_LuoKsBDLSkw7C)
 
 Amr: Project Manager
 Val: Quality Assurance Lead
