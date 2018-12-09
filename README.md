@@ -2,8 +2,8 @@
 
 <img src="./src/assets/HouseMates_Logo_Circle_01.png"
      alt="Logo"
-     width="800"
-     height="800"
+     width="400"
+     height="400"
      style= "margin: 10px auto 20px; display: block; height: 100; width: 100;"     
 />
 
