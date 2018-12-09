@@ -360,7 +360,9 @@ export const leaveHouse = () => {
 			const house_id = snapshot.val();
 			return firebase.database().ref(`/houses/${house_id}/users/${currentUser.uid}`).remove()
 				.then(() => {
-					return setUserHouseID("");
+					return setUserHouseID("").then(() => {
+						return firebase.database().ref(`users/${currentUser.uid}/tasks`).set({});
+					});
 				});
 		});
 	});
