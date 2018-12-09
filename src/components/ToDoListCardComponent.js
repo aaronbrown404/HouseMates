@@ -93,7 +93,7 @@ export default class CardComponent extends Component {
 
         return (
             <Card>
-                <CardItem button bordered onPress={()=>alert("Detailed task description.")}>
+                <CardItem button bordered>
                     <Left>
                         <View style={{paddingLeft: 10}}>
                             <Text style={{fontWeight: 'bold'}}>{this.state.name}</Text>
