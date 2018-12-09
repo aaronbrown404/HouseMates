@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 0
+        paddingBottom: 5
     },
     box_Form02: {
         flex: 5,
         backgroundColor: 'transparent',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 0,
+        paddingTop: 10,
         marginBottom: '55%'
     },
     buttonContainerStyle: {
