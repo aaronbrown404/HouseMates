@@ -151,52 +151,52 @@ const formStyles = {
 const options = {
     fields: {
         name: {
-            label: '  name:'
+            label: '  name'
         },
         desc: {
             multiline: true,
             numberOfLines: 3,
-            label: '  description:'
+            label: '  description'
         },
         deadline: {
-            label: '  deadline:',
+            label: '  deadline',
             mode: 'date'
         },
         reminder: {
-            label: '  enable reminder?'
+            label: ' enable reminder?'
         },
         cycle: {
-            label: '  task renews...'
+            label: ' task renews:'
         }
     },
     stylesheet: formStyles,
 };
 // StyleSheet for the sign up screen.
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#F5F5F5',
-    paddingLeft: 16,
-    paddingRight: 16,
-    // This field can be changed to adjust style.
-    paddingTop: 40
-  },
-  box_SubContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#F5F5F5',
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-  box_Title: {
-    flex: 1,
-    marginTop: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#415180',
-  },
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#F5F5F5',
+        paddingLeft: 16,
+        paddingRight: 16,
+        // This field can be changed to adjust style.
+        paddingTop: 40
+    },
+    box_SubContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#F5F5F5',
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10
+    },
+    box_Title: {
+        flex: 1,
+        marginTop: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#415180',
+    },
     box_Title2: {
         margin: 'auto',
         justifyContent: 'flex-end',
@@ -207,19 +207,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#415180',
     },
-  box_Form: {
-    flex: 1,
-    backgroundColor: '#F5F5F5',
-    padding: 20,
-    justifyContent: 'flex-start',
-  },
-  text_Title: {
-    fontWeight: 'bold',
-    fontSize: 40,
-    color: 'white'
-  },
-  text_SubTitle: {
-    color: '#415180',
-    fontSize: 16
-  },
+    box_Form: {
+        flex: 1,
+        backgroundColor: '#F5F5F5',
+        padding: 20,
+        justifyContent: 'flex-start',
+    },
+    text_Title: {
+        fontWeight: 'bold',
+        fontSize: 40,
+        color: 'white'
+    },
+    text_SubTitle: {
+        color: '#415180',
+        fontSize: 16
+    },
 });

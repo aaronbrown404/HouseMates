@@ -55,7 +55,6 @@ export default class HouseSetupScreen extends Component {
             // Generate Unique house ID
             var houseID = generateID();
             var foundID = false;
-            //while (idExists(houseID)) { houseID = generateID(); }
 
             // Create house
             var houseName = value.newCode;
@@ -72,6 +71,8 @@ export default class HouseSetupScreen extends Component {
                 if(exists) {
                     joinHouse(value.joinCode);
                     this.props.navigation.navigate("TabNavigation");
+                } else {
+                    alert('wrong join code :(');
                 }
             })
         }
