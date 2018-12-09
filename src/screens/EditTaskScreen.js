@@ -110,7 +110,7 @@ export default class EditTaskScreen extends Component {
                 onPress={this.handleSubmit_TaskSubmit}
                 containerStyle={{ padding: 11, height: 45, overflow: 'hidden', borderRadius: 20,
                   backgroundColor: '#6171A0' }}>
-              Save Changes
+              SAVE CHANGES
             </Button>
           </View>
         </View>
