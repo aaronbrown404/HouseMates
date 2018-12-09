@@ -8,14 +8,23 @@
 />
 
 Amr: Project Manager
+
 Val: Quality Assurance Lead
+
 Parmida: Database Specialist
+
 Ravneet: Business Analyst
+
 Karl: Algorithm Specialist
+
 Oskar: Software Architect
+
 Aaron: User Interface
+
 Brandon: Software Development Lead
+
 JiMin: Software Development Lead
+
 Bayar: Systems Analyst
 
 ## Introduction
