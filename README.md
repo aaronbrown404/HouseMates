@@ -7,75 +7,9 @@
      style= "margin: 10px auto 20px; display: block; height: 100; width: 100;"     
 />
 
-Amr: Project Manager
-
-Val: Quality Assurance Lead
-
-Parmida: Database Specialist
-
-Ravneet: Business Analyst
-
-Karl: Algorithm Specialist
-
-Oskar: Software Architect
-
-Aaron: User Interface
-
-Brandon: Software Development Lead
-
-JiMin: Software Development Lead
-
-Bayar: Systems Analyst
-
 ## Introduction
 
 Housemates is an application designed to solve many of the problems associated with negotiating tasks between members of a household. By managing the user-created tasks of your residence using an advanced task-assigning algorithm, Housemates delivers the perfect way to avoid unnecessary conflicts, stay organized, and ensure those “forgetful” roommates stay accountable. No more bickering over who does those soiled dishes. Let Housemates do the dirty work.
-
-
-
-## Login Credentials
-
-We have provided the following user accounts for testing purposes. Upon reaching the login screen, enter the following usernames and passwords as appropriate.
-
-
-
-1. USER ONE - account with data
-
-		Username: ‘populated@gmail.com’
-
-		Password: ‘123456’
-
-2. USER TWO - clean account
-
-		Username: ‘clean@gmail.com’
-
-		Password: ‘123456’
-
-
-
-## Requirements
-
--   Two iPhone 6 or later running iOS 11.
-
--   Connection to the internet at all times.
-
-
-
-
-## Setup Instructions
-
--   Enable WiFi. Ensure connection has been established.
-
--   Open the Housemates app. Testing devices will have application pre-installed.
-
--   Select “Log In” by clicking the button with that title.
-
--   Enter one of the usernames and passwords provided above.
-
--   Repeat steps for second phone.
-
-
-
 
 ## Code Snippets
 
@@ -101,8 +35,6 @@ export  const  createTask  = ({name, desc, cycle, reminder, deadline}) => {
 	});
 }
 ```
-
-
 
 
 ## Populating House Task List
@@ -133,15 +65,9 @@ export  const  createTask  = ({name, desc, cycle, reminder, deadline}) => {
 />
 ```
 
-
-
-
-
 The source code for the Housemates application can be viewed on GitHub at the following repository:
 
 [https://github.com/aselfiky/HouseMates](https://github.com/aselfiky/HouseMates)
-
-
 
 
 ## Known Bugs
@@ -151,12 +77,6 @@ We currently have an issue building the app in Android, but otherwise you don’
 ## Troubleshooting
 
 If any unexpected behavior occurs while using Housemates, verify your internet connection has not been interrupted as the app requires updates from frequent updates to the database.
-
-
-
-If the issue persists, close the application and then relaunch it. Follow the instructions listed in the setup section if necessary.
-
-
 
 ## Technical Support
 
